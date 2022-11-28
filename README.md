@@ -23,9 +23,10 @@ Adapun peran/aktor dari pengguna aplikasi sebagai berikut.
 ### Daftar Modul yang akan Diimplementasikan serta Kontrak Kerja Anggota Kelompok
 1. Monica Oktaviona\
    A. **Homepage**
-      - Penjelasan pentingnya pangan dan visi G20 dalam meningkatkan ketahanan pangan
-      - Penjelasan *introductory* web kami
-      - Terdapat *interface* tombol *register* sebagai penyalur/organisas yang menyalurkan donasi pangan dan tombol *register* sebagai donatur
+    - Penjelasan pentingnya pangan dan visi G20 dalam meningkatkan ketahanan pangan
+    - Penjelasan *introductory* web kami
+    - Terdapat *interface* tombol *register* sebagai penyalur/organisas yang menyalurkan donasi pangan dan tombol *register* sebagai donatur 
+
    B. **Register penyalur/organisasi dan donatur**\
    C. **Autentikasi Login dan Logout**
 
@@ -55,3 +56,4 @@ Adapun peran/aktor dari pengguna aplikasi sebagai berikut.
 2. Proses fetch dapat dilakukan dengan menggunakan `Uri.parse` pada `Dart` terhadap link tadi, lalu mengambilnya menggunakan `get` dengan tipe `application/json`. Selanjutnya, data yang telah diambil tadi dapat di-decode menggunakan `jsonDecode()` yang nantinya akan di-convert melalui model yang telah dibuat dan ditampilkan secara asinkronus menggunakan widget `FutureBuilder`
 
 3. Data - data JSON tadi dapat digunakan secara CRUD pada kedua media secara asinkronus
+
