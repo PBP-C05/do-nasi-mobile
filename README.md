@@ -22,6 +22,7 @@ Adapun peran/aktor dari pengguna aplikasi sebagai berikut.
 
 ### Daftar fitur atau modul yang diimplementasikan beserta kontrak kinerja per anggota kelompok
 1. Monica Oktaviona
+   
    A) Homepage
       - Penjelasan pentingnya pangan dan visi G20 dalam meningkatkan ketahanan pangan
       - Penjelasan *introductory* web kami
@@ -30,10 +31,12 @@ Adapun peran/aktor dari pengguna aplikasi sebagai berikut.
    C) Autentikasi Login dan Logout
 
 2. Davyn Reinhard Santoso
+   
    A) Page Harapan dari Penyalur
       Laman ini berisi harapan-harapan pembuka donasi untuk para donatur yang mendonasikan uang/makanan mereka 
 
 3. Dave Matthew Peter Lumban Tobing
+   
    A) Page Overview donasi
       - tampilan untuk penyalur: penyalur dapat melihat semua donasi yang tersedia
       - tampilan untuk pemberi: pemberi dapat melihat semua donasi yang telah ia berikan beserta dengan daftar penyalur dan jumlahnya
@@ -42,11 +45,11 @@ Adapun peran/aktor dari pengguna aplikasi sebagai berikut.
        - ketika pemberi udah ngeklik salah satu saluran donasi yang dipilih, dia ke redirect ke sini buat nginput donasi dia
 
 5. Fresty Tania Stearine
-   A) Artikel 
+   A) Q&A 
       Berisi pertanyaan - pertanyaan dari pemberi dan jawaban - jawaban dari penyalur
 
 6. Debby Trinita
-   A) Q&A 
+   A) Artikel 
       Berisi artikel - artikel yang berkaitan dengan tingkat kelaparan dunia
 
 #### Alur pengintegrasian dengan web service untuk terhubung dengan aplikasi web yang sudah dibuat saat Proyek Tengah Semester 
