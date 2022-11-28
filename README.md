@@ -43,11 +43,11 @@ Adapun peran/aktor dari pengguna aplikasi sebagai berikut.
 
 5. Fresty Tania Stearine
    A) Artikel 
-      Berisi artikel - artikel yang berkaitan dengan tingkat kelaparan dunia
+      Berisi pertanyaan - pertanyaan dari pemberi dan jawaban - jawaban dari penyalur
 
 6. Debby Trinita
    A) Q&A 
-      Berisi pertanyaan - pertanyaan dari pemberi dan jawaban - jawaban dari penyalur
+      Berisi artikel - artikel yang berkaitan dengan tingkat kelaparan dunia
 
 #### Alur pengintegrasian dengan web service untuk terhubung dengan aplikasi web yang sudah dibuat saat Proyek Tengah Semester 
 1. Integrasi aplikasi mobile dan web service dapat dilakukan dengan cara melakukan pengambilan data berformat JSON atau Javascript Object Notation di aplikasi mobile pada web service dengan menggunakan url `https://do-nasi.herokuapp.com/[page-name]/json/..../`
