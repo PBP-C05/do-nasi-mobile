@@ -41,11 +41,11 @@ Adapun peran/aktor dari pengguna aplikasi sebagai berikut.
    B) Page donasi
        - ketika pemberi udah ngeklik salah satu saluran donasi yang dipilih, dia ke redirect ke sini buat nginput donasi dia
 
-5. Fresty Tania Stearine
+5. Debby Trinita
    A) Artikel 
       Berisi artikel - artikel yang berkaitan dengan tingkat kelaparan dunia
 
-6. Debby Trinita
+6. Fresty Tania Stearine
    A) Q&A 
       Berisi pertanyaan - pertanyaan dari pemberi dan jawaban - jawaban dari penyalur
 
