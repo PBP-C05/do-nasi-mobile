@@ -9,7 +9,7 @@ class DummyPage extends StatefulWidget {
 
 class _DummyPageState extends State<DummyPage> {
   int _counter = 0;
-  
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -19,6 +19,7 @@ class _DummyPageState extends State<DummyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // APP BAR IF NEEDED
       appBar: AppBar(
         title: const Text("Dummy Counter"),
       ),

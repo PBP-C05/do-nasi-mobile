@@ -13,8 +13,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // APP BAR IF NEEDED,
-      // DI MAIN PAGE GAUSAH DITAMBAHIN APP BAR (????)
+      // APP BAR IF NEEDED
       appBar: AppBar(
         title: const Text('Rumah singgah'),
       ),
