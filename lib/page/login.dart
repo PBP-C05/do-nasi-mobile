@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:do_nasi/page/profile.dart';
+// import 'package:do_nasi/page/profile.dart';
+
+import 'main_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -157,7 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                                 child: const Text("Masuk"),
                               ))
                         ],
-                      ))),
+                      ),
+                  ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -175,7 +179,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               )
-            ])));
+            ],
+          ),
+        ),
+    );
   }
 }
 
@@ -213,7 +220,7 @@ showAlertDialog2(BuildContext context) {
     child: const Text("Close"),
     onPressed: () {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const ProfilePage()));
+          MaterialPageRoute(builder: (context) => const MainPage()));
     },
   );
 
