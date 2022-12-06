@@ -1,5 +1,3 @@
-import 'package:do_nasi/views/dummy_counter.dart';
-import 'package:do_nasi/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
