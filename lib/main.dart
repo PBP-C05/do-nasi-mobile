@@ -1,5 +1,6 @@
 import 'package:do_nasi/views/dummy_counter.dart';
 import 'package:do_nasi/views/home_page.dart';
+import 'package:do_nasi/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -36,7 +37,8 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     MyHomePage(),
     DummyPage(),
-    ];
+    // bakal ada page untuk profile
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,27 +47,9 @@ class _MainPageState extends State<MainPage> {
       //   title: Text(widget.title),
       // ),
       body: screens[navbarIndex],
-      bottomNavigationBar: SizedBox(
-        height: 58,
-        child: BottomNavigationBar(
-          currentIndex: navbarIndex,
-          onTap: (value) => setState(() => navbarIndex = value),
-          showUnselectedLabels: false,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.explore),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: navbarIndex,
+        onTap: (value) => setState(() => navbarIndex = value),
       ),
     );
   }
