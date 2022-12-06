@@ -1,7 +1,7 @@
-import 'package:do_nasi/views/dummy_counter.dart';
-import 'package:do_nasi/views/home_page.dart';
-import 'package:do_nasi/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:do_nasi/page/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,44 +13,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Colors.blueGrey[50],
-      ),
-      home: const MainPage(title: 'Flutter App'),
+    return Provider(
+        create: (_) {
+          CookieRequest request = CookieRequest();
+          return request;
+        },
+        child: MaterialApp(
+            title: 'do-nasi',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: LoginPage(),
+            routes: {
+              // PENTING: ini nanti bakal diarahin ke on boarding page ya guys (menyusul)
+              "/login": (context) => LoginPage(),
+            }
+        ),
     );
   }
 }
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  int navbarIndex = 0;
-  final screens = [
-    MyHomePage(),
-    DummyPage(),
-    // bakal ada page untuk profile
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
-      body: screens[navbarIndex],
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: navbarIndex,
-        onTap: (value) => setState(() => navbarIndex = value),
-      ),
-    );
-  }
-}
