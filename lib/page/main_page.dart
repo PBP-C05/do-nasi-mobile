@@ -14,9 +14,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int navbarIndex = 0;
   final screens = [
-    MyHomePage(),
-    DummyPage(),
-    ProfilePage(),
+    const MyHomePage(),
+    const DummyPage(),
+    const ProfilePage(),
   ];
 
   @override
