@@ -6,8 +6,10 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'main_page.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -46,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
               Form(
                   key: _loginFormKey,
                   child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       child: Column(
                         children: [
                           Container(
@@ -111,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                               },
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Container(
                               width: double.infinity,
                               child: TextButton(
