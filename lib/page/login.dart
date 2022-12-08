@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 // import 'package:do_nasi/page/profile.dart';
@@ -30,7 +31,15 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Login'),
+          backgroundColor: Colors.white,
+          actions: [],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
+              Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+            ],
+          ),
         ),
         body: Padding(
             padding: const EdgeInsets.all(30),
@@ -193,7 +202,7 @@ showAlertDialog(BuildContext context) {
   Widget okButton = TextButton(
     child: const Text("Coba Lagi"),
     onPressed: () {
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
     },
   );
