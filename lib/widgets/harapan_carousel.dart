@@ -96,7 +96,7 @@ class _HarapanCarouselState extends State<HarapanCarousel> {
                 margin: const EdgeInsets.symmetric(horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _currentIndex == index ? Colors.black : Colors.grey,
+                  color: _currentIndex == index ? Colors.yellow : Colors.grey[400],
                 ),
               );
             }),

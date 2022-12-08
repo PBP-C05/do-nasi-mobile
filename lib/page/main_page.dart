@@ -17,8 +17,8 @@ class _MainPageState extends State<MainPage> {
   int navbarIndex = 0;
   final screens = [
     const MyHomePage(),
-    const DummyPage(),
-    const HarapanPage(),
+    const DummyPage(), // Nanti ganti aja yg ini
+    const HarapanPage(), // Sama ini
     const ProfilePage(),
   ];
 
