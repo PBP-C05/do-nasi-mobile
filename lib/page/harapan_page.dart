@@ -1,5 +1,4 @@
 import 'package:do_nasi/widgets/harapan_carousel.dart';
-import 'package:do_nasi/widgets/harapan_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
