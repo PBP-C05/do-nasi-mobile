@@ -93,13 +93,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  getwidget:
+  google_nav_bar:
     dependency: "direct main"
     description:
-      name: getwidget
+      name: google_nav_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "5.0.6"
   http:
     dependency: "direct main"
     description:
@@ -121,6 +121,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  line_icons:
+    dependency: "direct main"
+    description:
+      name: line_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   lints:
     dependency: transitive
     description:

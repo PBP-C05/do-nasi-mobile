@@ -4,6 +4,8 @@ import 'package:do_nasi/page/profile.dart';
 import 'package:do_nasi/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/google_navbar.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -26,10 +28,7 @@ class _MainPageState extends State<MainPage> {
       //   title: Text(widget.title),
       // ),
       body: screens[navbarIndex],
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: navbarIndex,
-        onTap: (value) => setState(() => navbarIndex = value),
-      ),
+      bottomNavigationBar: const GoogleNavbar(),
     );
   }
 }
