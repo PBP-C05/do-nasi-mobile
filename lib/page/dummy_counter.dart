@@ -20,9 +20,6 @@ class _DummyPageState extends State<DummyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // APP BAR IF NEEDED
-      appBar: AppBar(
-        title: const Text("Dummy Counter"),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -15,10 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
 
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('My Profile'),
-        ), // Menambahkan drawer menu
+    return Scaffold(// Menambahkan drawer menu
         body: FutureBuilder(
             future: request
                 .get("https://do-nasi.up.railway.app/auth/get_user_json/"),

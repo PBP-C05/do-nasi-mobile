@@ -15,10 +15,8 @@ class _HarapanPageState extends State<HarapanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Harapan'),
-      ),
-      body: Center(child: Column(children: [HarapanCarousel()])),
+
+      body: Center(child: Column(children: const [HarapanCarousel()])),
     );
   }
 }
