@@ -6,7 +6,12 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class GoogleNavbar extends StatefulWidget {
-  const GoogleNavbar({super.key});
+  const GoogleNavbar({super.key, 
+    this.selectedIndex = 0, 
+    required this.onTap,});
+
+  final int selectedIndex;
+  final void Function(int) onTap;
 
   @override
   State<GoogleNavbar> createState() => _MyWidGoogleNavbar();
@@ -34,13 +39,6 @@ class _MyWidGoogleNavbar extends State<GoogleNavbar> {
             hoverColor: Colors.yellow, // tab button hover color
             haptic: true, // haptic feedback
             tabBorderRadius: 10,
-            //tabActiveBorder:
-            //    Border.all(color: Colors.yellow, width: 2), // tab button border
-            //tabBorder:
-            //    Border.all(color: Colors.yellow, width: 1), // tab button border
-            //tabShadow: const [
-            //  BoxShadow(color: Colors.yellow)
-            //], // tab button shadow
             curve: Curves.linear, // tab animation curves
             duration:
                 const Duration(milliseconds: 300), // tab animation duration

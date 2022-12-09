@@ -154,9 +154,12 @@ class _MyFormPageState extends State<MyFormPage> {
                                   const EdgeInsets.only(top: 20, bottom: 20),
                               shrinkWrap: true,
                               children: <Widget>[
-                                Center(
-                                    child: Text('Budget Berhasil Ditambahkan')),
+                                const Center(
+                                    child: Text('Berhasil Ditambahkan')),
                                 ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.yellow[900], // Background color
+                                    ),
                                     onPressed: () {
                                       Navigator.pop(context);
                                       Navigator.pop(context);

@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+
 class HarapanCarousel extends StatefulWidget {
-  HarapanCarousel({super.key});
+  const HarapanCarousel({super.key});
 
   @override
   State<HarapanCarousel> createState() => _HarapanCarouselState();
@@ -53,7 +54,8 @@ class _HarapanCarouselState extends State<HarapanCarousel> {
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(
-                                    0, 3), // changes position of shadow
+                                    0, 3), 
+                                  // changes position of shadow
                               ),
                             ],
                           ),
@@ -94,7 +96,7 @@ class _HarapanCarouselState extends State<HarapanCarousel> {
                 margin: const EdgeInsets.symmetric(horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _currentIndex == index ? Colors.black : Colors.grey,
+                  color: _currentIndex == index ? Colors.yellow : Colors.grey[400],
                 ),
               );
             }),
