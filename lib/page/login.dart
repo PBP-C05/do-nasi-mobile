@@ -147,7 +147,6 @@ class _LoginPageState extends State<LoginPage> {
                                     if (response['status'] == true) {
                                       print("ya bisa");
                                     }
-
                                     if (request.loggedIn) {
                                       showAlertDialog2(context);
                                       print("Alhamdulillah");

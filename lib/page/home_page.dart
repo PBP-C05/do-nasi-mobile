@@ -1,4 +1,5 @@
 import 'package:do_nasi/page/harapan_page.dart';
+import 'package:do_nasi/page/page_overview.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -30,7 +31,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       MaterialPageRoute(
                           builder: (context) => const HarapanPage()));
                 },
-                child: const Text('Harapan Demo'))
+                child: const Text('Harapan Demo')),
+             ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PageOverview()));
+                },
+                child: const Text('Page Overview'))
           ],
         ),
       ),
