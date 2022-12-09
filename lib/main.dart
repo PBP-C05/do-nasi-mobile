@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
             title: 'do-nasi',
             theme: ThemeData(
               primarySwatch: Colors.blue,
+              fontFamily: 'Poppins'
             ),
             home: LoginPage(),
             routes: {
