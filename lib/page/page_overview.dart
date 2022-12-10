@@ -6,9 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:do_nasi/page/page_overview_form.dart';
 
-
 class PageOverview extends StatefulWidget {
-
   const PageOverview({super.key});
 
   @override
@@ -18,22 +16,25 @@ class PageOverview extends StatefulWidget {
 class _PageOverviewState extends State<PageOverview> {
   @override
   void refresh() {
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.yellow[900],
+          centerTitle: true,
           title: const Text('Page Overview'),
         ),
         body: FutureBuilder(
-          future: request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
+          future:
+              request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data != null){
-              final is_penyalur = snapshot.data['data']['role'] == "Penyalur" ? true : false ;
+            if (snapshot.data != null) {
+              final is_penyalur =
+                  snapshot.data['data']['role'] == "Penyalur" ? true : false;
               return FutureBuilder(
                   future: fetchPageOverview(request),
                   builder: (context, AsyncSnapshot snapshot) {
@@ -45,8 +46,8 @@ class _PageOverviewState extends State<PageOverview> {
                           children: const [
                             Text(
                               "Tidak ada Page :(",
-                              style:
-                              TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                              style: TextStyle(
+                                  color: Color(0xff59A5D8), fontSize: 20),
                             ),
                             SizedBox(height: 8),
                           ],
@@ -59,22 +60,14 @@ class _PageOverviewState extends State<PageOverview> {
                                 return Column(
                                   children: [
                                     Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 12),
-                                        padding: const EdgeInsets.all(20.0),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(15.0),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  color: Colors.black,
-                                                  blurRadius: 2.0)
-                                            ]),
+                                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                        padding: const EdgeInsets.all(32.0),
+                                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15.0), boxShadow: const [BoxShadow(color: Colors.yellow, blurRadius: 2.0)]),
                                         child: Column(children: [
                                           Row(
                                             children: [
                                               const Text(
-                                                "Title:",
+                                                "Title                  :",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold),
                                               ),
@@ -86,7 +79,7 @@ class _PageOverviewState extends State<PageOverview> {
                                           Row(
                                             children: [
                                               const Text(
-                                                "Description:",
+                                                "Description :",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold),
                                               ),
@@ -97,87 +90,231 @@ class _PageOverviewState extends State<PageOverview> {
                                           ),
                                           Row(children: [
                                             const Text(
-                                              "Deadline:",
+                                              "Deadline       :",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Flexible(
                                                 child: Text(
                                                     DateFormat('EEEE, MMM d, yyyy')
-                                                        .format(snapshot.data![index]
-                                                        .fields.deadline)))
+                                                        .format(snapshot
+                                                        .data![index]
+                                                        .fields
+                                                        .deadline)))
                                           ]),
                                         ])),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.yellow[900], // Background color
+                                          backgroundColor: Colors
+                                              .yellow[900], // Background color
                                         ),
                                         onPressed: () {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => MyFormPage(setparent: refresh)));
+                                                  builder: (context) =>
+                                                      MyFormPage(
+                                                          setparent: refresh)));
                                         },
-                                        child: const Text('TAMBAH DONASI'))
+                                        child: const Text('TAMBAH DONASI'))],
+                                );
+                              }
+                              else if (is_penyalur) {
+                                return Column(
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 12),
+                                        padding: const EdgeInsets.all(20.0),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                  color: Colors.yellow,
+                                                  blurRadius: 2.0)
+                                            ]),
+                                        child: Column(children: [
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                "Title                  :",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              Flexible(
+                                                  child: Text(snapshot
+                                                      .data![index].fields.title))
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                "Description :",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              Flexible(
+                                                  child: Text(snapshot.data![index]
+                                                      .fields.description))
+                                            ],
+                                          ),
+                                          Row(children: [
+                                            const Text(
+                                              "Deadline       :",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Flexible(
+                                                child: Text(
+                                                    DateFormat('EEEE, MMM d, yyyy')
+                                                        .format(snapshot
+                                                        .data![index]
+                                                        .fields
+                                                        .deadline)))
+                                          ]),
+                                        ])),
                                   ],
                                 );
                               }
-                              return Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  padding: const EdgeInsets.all(20.0),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                            color: Colors.black, blurRadius: 2.0)
-                                      ]),
-                                  child: Column(children: [
-                                    Row(
-                                      children: [
+                                else if (DateTime.parse(snapshot
+                                          .data![index].fields.deadline
+                                          .toString())
+                                      .isAfter(DateTime.parse(
+                                          DateTime.now().toString())) &&
+                                  !is_penyalur) {
+                                return Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 12),
+                                    padding: const EdgeInsets.all(20.0),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              color: Colors.yellow,
+                                              blurRadius: 2.0)
+                                        ]),
+                                    child: Column(children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            "Title                  :",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Flexible(
+                                              child: Text(snapshot
+                                                  .data![index].fields.title))
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            "Description :",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Flexible(
+                                              child: Text(snapshot.data![index]
+                                                  .fields.description))
+                                        ],
+                                      ),
+                                      Row(children: [
                                         const Text(
-                                          "Title ",
-                                          style:
-                                          TextStyle(fontWeight: FontWeight.bold),
+                                          "Deadline       :",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
                                             child: Text(
-                                                snapshot.data![index].fields.title))
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
+                                                DateFormat('EEEE, MMM d, yyyy')
+                                                    .format(snapshot
+                                                        .data![index]
+                                                        .fields
+                                                        .deadline)))
+                                      ]),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                        ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.yellow[
+                                                  900], // Background color
+                                            ),
+                                            onPressed: () {
+                                              Text("Berhasil melakukan donasi");
+                                            },
+                                            child:
+                                                const Text('MELAKUKAN DONASI'))
+                                      ]),
+                                    ]));
+                              }
+                                else {
+                                return Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 12),
+                                    padding: const EdgeInsets.all(20.0),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              color: Colors.yellow,
+                                              blurRadius: 2.0)
+                                        ]),
+                                    child: Column(children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            "Title                  :",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Flexible(
+                                              child: Text(snapshot
+                                                  .data![index].fields.title))
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            "Description :",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Flexible(
+                                              child: Text(snapshot.data![index]
+                                                  .fields.description))
+                                        ],
+                                      ),
+                                      Row(children: [
                                         const Text(
-                                          "Description ",
-                                          style:
-                                          TextStyle(fontWeight: FontWeight.bold),
+                                          "Deadline       :",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
-                                            child: Text(snapshot
-                                                .data![index].fields.description))
-                                      ],
-                                    ),
-                                    Row(children: [
-                                      const Text(
-                                        "Deadline ",
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                      Flexible(
-                                          child: Text(DateFormat('EEEE, MMM d, yyyy')
-                                              .format(snapshot
-                                              .data![index].fields.deadline)))
-                                    ]),
-                                  ]));
+                                            child: Text(
+                                                DateFormat('EEEE, MMM d, yyyy')
+                                                    .format(snapshot
+                                                        .data![index]
+                                                        .fields
+                                                        .deadline)))
+                                      ]),
+                                    ]));
+                              }
                             });
                       }
                     }
                   });
-            }
-            else{
+            } else {
               return const Center(child: CircularProgressIndicator());
             }
-          } ,
+          },
         ));
   }
 }

@@ -33,6 +33,8 @@ class _MyFormPageState extends State<MyFormPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.yellow[900],
+        centerTitle: true,
         title: const Text('Form Donasi'),
       ), // Menambahkan drawer menu
       body: Form(
