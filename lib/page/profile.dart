@@ -17,9 +17,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(// Menambahkan drawer menu
         body: FutureBuilder(
-            future: request
-                .get("https://do-nasi.up.railway.app/auth/get_user_json/"),
-            // request.get("http://127.0.0.1:8000/auth/get_user_json/"),
+            future: 
+            //request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
+             request.get("http://127.0.0.1:8000/auth/get_user_json/"),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
@@ -125,10 +125,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             onPressed: () async {
                               print(request.loggedIn);
                               if (request.loggedIn) {
-                                const url =
-                                    "https://do-nasi.up.railway.app/auth/logout_flutter/";
-                                // const url =
-                                //     "http://127.0.0.1:8000/auth/logout_flutter/";
+                                //const url =
+                                //    "https://do-nasi.up.railway.app/auth/logout_flutter/";
+                                 const url =
+                                     "http://127.0.0.1:8000/auth/logout_flutter/";
                                 final response = await request.logout(url);
                               } else {
                                 Navigator.pushReplacement(

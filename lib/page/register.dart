@@ -250,10 +250,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           onPressed: () async {
                             if (_registerFormKey.currentState!.validate()) {
-                              // const url =
-                              //     "http://127.0.0.1:8000/auth/register_flutter/";
                               const url =
-                                  "https://do-nasi.up.railway.app/auth/register_flutter/";
+                                "http://127.0.0.1:8000/auth/register_flutter/";
+                              //const url =
+                              //    "https://do-nasi.up.railway.app/auth/register_flutter/";
 
                               final response = await request.post(url, {
                                 "name": _controllerName.text,
