@@ -1,20 +1,23 @@
+import 'package:do_nasi/page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 // import 'package:do_nasi/page/profile.dart';
-import 'package:do_nasi/page/register.dart';
 
 import 'main_page.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _loginFormKey = GlobalKey<FormState>();
+class _RegisterPageState extends State<RegisterPage> {
+  final _registerFormKey = GlobalKey<FormState>();
+  final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerUsername = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
+  String? _role = 'Penyalur';
 
   bool isPasswordVisible = false;
   void togglePasswordView() {
@@ -29,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Register'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),
@@ -39,14 +42,14 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: const Text(
-                  'Log in to Your Account',
+                  'Create Your Account',
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
                       fontSize: 22),
                 )),
             Form(
-              key: _loginFormKey,
+              key: _registerFormKey,
               child: Container(
                 padding: EdgeInsets.all(20),
                 child: Column(
@@ -57,11 +60,33 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: TextFormField(
+                        controller: _controllerName,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.person_outline),
+                          labelText: "Name",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nama tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(250, 250, 250, 0.95),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: TextFormField(
                         controller: _controllerEmail,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
-                          hintText: 'Email',
+                          labelText: "Email",
                           prefixIcon: const Icon(Icons.email),
                           hintStyle: const TextStyle(
                             color: Color.fromRGBO(200, 200, 200, 1),
@@ -83,12 +108,34 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: TextFormField(
+                        controller: _controllerUsername,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.alternate_email),
+                          labelText: "Username",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Username tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(250, 250, 250, 0.95),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: TextFormField(
                         controller: _controllerPassword,
                         obscureText: !isPasswordVisible,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
-                          hintText: 'Password',
+                          labelText: 'Password',
                           prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
                             color: const Color.fromRGBO(200, 200, 200, 1),
@@ -111,7 +158,47 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
+                    Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1,
+                              color: const Color.fromRGBO(150, 150, 150, 1)),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            const ListTile(
+                              title: Text('Role'),
+                              leading: Icon(Icons.people_alt),
+                            ),
+                            ListTile(
+                              title: const Text('Penyalur'),
+                              leading: Radio<String>(
+                                value: 'Penyalur',
+                                groupValue: _role,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _role = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              title: const Text('Donatur'),
+                              leading: Radio<String>(
+                                value: 'Donatur',
+                                groupValue: _role,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _role = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        )),
+                    const SizedBox(height: 20),
                     Container(
                         width: double.infinity,
                         child: TextButton(
@@ -122,39 +209,35 @@ class _LoginPageState extends State<LoginPage> {
                                 MaterialStateProperty.all<Color>(Colors.white),
                           ),
                           onPressed: () async {
-                            if (_loginFormKey.currentState!.validate()) {
+                            if (_registerFormKey.currentState!.validate()) {
                               // const url =
-                              //     "http://127.0.0.1:8000/auth/login_flutter/";
+                              //     "http://127.0.0.1:8000/auth/register_flutter/";
                               const url =
-                                  "https://do-nasi.up.railway.app/auth/login_flutter/";
+                                  "https://do-nasi.up.railway.app/auth/register_flutter/";
 
-                              final response = await request.login(url, {
+                              final response = await request.post(url, {
+                                "name": _controllerName.text,
                                 "email": _controllerEmail.text,
-                                "password": _controllerPassword.text
+                                "username": _controllerUsername.text,
+                                "password": _controllerPassword.text,
+                                "role": _role,
                               });
 
                               print("here response");
-                              // cara get responsenya
-                              print(response['status']);
-                              // kalo not authenticated nanti datanya null aja
-                              // (ini bisa)
-                              print(response['data' == null]);
-                              // buat cek role nanti
-                              if (response['status'] == true) {
-                                print("ya bisa");
-                              }
+                              //
+                              print(response);
 
-                              if (request.loggedIn) {
-                                showAlertDialog2(context);
-                                print("Alhamdulillah");
-                              } else {
-                                showAlertDialog(context);
-                              }
+                              // if (request.loggedIn) {
+                              //   showAlertDialog2(context);
+                              //   print("Alhamdulillah");
+                              // } else {
+                              //   showAlertDialog(context);
+                              // }
                             } else {
                               print("tidak valid");
                             }
                           },
-                          child: const Text("Masuk"),
+                          child: const Text("Submit"),
                         ))
                   ],
                 ),
@@ -163,15 +246,15 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text('Belum punya akun?'),
+                const Text('Sudah punya akun?'),
                 TextButton(
                   child: const Text(
-                    'Daftar di sini.',
+                    'Masuk di sini.',
                   ),
                   onPressed: () {
                     //signup screen
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => RegisterPage(),
+                      builder: (context) => LoginPage(),
                     ));
                   },
                 ),
@@ -190,7 +273,7 @@ showAlertDialog(BuildContext context) {
     child: const Text("Coba Lagi"),
     onPressed: () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context, MaterialPageRoute(builder: (context) => RegisterPage()));
     },
   );
 
