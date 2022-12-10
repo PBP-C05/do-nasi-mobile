@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 // import 'package:do_nasi/page/profile.dart';
 import 'package:do_nasi/page/register.dart';
-import 'package:do_nasi/page/register.dart';
 
 import 'main_page.dart';
 
@@ -33,8 +32,8 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
-        actions: [],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -54,8 +53,8 @@ class _LoginPageState extends State<LoginPage> {
                   'Log in to Your Account',
                   style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 22),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 25),
                 )),
             Form(
               key: _loginFormKey,
@@ -71,10 +70,16 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _controllerEmail,
                         decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(255, 205, 46, 1),
+                            ),
+                          ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                           hintText: 'Email',
-                          prefixIcon: const Icon(Icons.email),
+                          prefixIcon: const Icon(Icons.email,
+                              color: Color.fromRGBO(200, 200, 200, 1)),
                           hintStyle: const TextStyle(
                             color: Color.fromRGBO(200, 200, 200, 1),
                           ),
@@ -98,10 +103,16 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _controllerPassword,
                         obscureText: !isPasswordVisible,
                         decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(255, 205, 46, 1),
+                            ),
+                          ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                           hintText: 'Password',
-                          prefixIcon: const Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock,
+                              color: Color.fromRGBO(200, 200, 200, 1)),
                           suffixIcon: IconButton(
                             color: const Color.fromRGBO(200, 200, 200, 1),
                             splashRadius: 1,
@@ -125,13 +136,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
                     Container(
-                        width: double.infinity,
+                        width: 100,
+                        height: 35,
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.blue),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromRGBO(255, 205, 46, 1)),
                             foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
+                                MaterialStateProperty.all<Color>(Colors.black),
                           ),
                           onPressed: () async {
                             if (_loginFormKey.currentState!.validate()) {
@@ -146,6 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                               });
 
                               print("here response");
+                              print(response);
                               // cara get responsenya
                               print(response['status']);
                               // kalo not authenticated nanti datanya null aja
@@ -166,7 +179,10 @@ class _LoginPageState extends State<LoginPage> {
                               print("tidak valid");
                             }
                           },
-                          child: const Text("Masuk"),
+                          child: const Text(
+                            "Submit",
+                            style: TextStyle(fontSize: 15),
+                          ),
                         ))
                   ],
                 ),
@@ -179,6 +195,9 @@ class _LoginPageState extends State<LoginPage> {
                 TextButton(
                   child: const Text(
                     'Daftar di sini.',
+                    style: TextStyle(
+                      color: Color.fromRGBO(255, 205, 46, 1),
+                    ),
                   ),
                   onPressed: () {
                     //signup screen
@@ -198,20 +217,35 @@ class _LoginPageState extends State<LoginPage> {
 
 showAlertDialog(BuildContext context) {
   // set up the button
-  Widget okButton = TextButton(
-    child: const Text("Coba Lagi"),
+  Widget tryButton = TextButton(
+    child: const Text(
+      "Try Again",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Color.fromRGBO(255, 205, 46, 1),
+      ),
+    ),
     onPressed: () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     },
   );
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: const Text("Gagal!"),
-    content: const Text("Email dan password tidak cocok!"),
+    title: const Text(
+      "Invalid Log In",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+    content: const Text(
+      "Email and password did not match, please try again.",
+      textAlign: TextAlign.center,
+    ),
     actions: [
-      okButton,
+      tryButton,
     ],
   );
 
@@ -227,7 +261,12 @@ showAlertDialog(BuildContext context) {
 showAlertDialog2(BuildContext context) {
   // set up the button
   Widget okButton = TextButton(
-    child: const Text("Close"),
+    child: const Text(
+      "Start Exploring",
+      style: TextStyle(
+        color: Color.fromRGBO(255, 205, 46, 1),
+      ),
+    ),
     onPressed: () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const MainPage()));
@@ -236,8 +275,17 @@ showAlertDialog2(BuildContext context) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: const Text("Selamat!"),
-    content: const Text("Anda berhasil login"),
+    title: const Text(
+      "Successfully Logged In",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+    content: const Text(
+      "Welcome back! :)",
+      textAlign: TextAlign.center,
+    ),
     actions: [
       okButton,
     ],
