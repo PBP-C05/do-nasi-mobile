@@ -14,23 +14,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider(
-        create: (_) {
-          CookieRequest request = CookieRequest();
-          return request;
-        },
-        child: MaterialApp(
-            title: 'do-nasi',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              fontFamily: 'Poppins'
-            ),
-            home: LoginPage(),
-            routes: {
-              // PENTING: ini nanti bakal diarahin ke on boarding page ya guys (menyusul)
-              "/login": (context) => LoginPage(),
-            }
-        ),
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+      child: MaterialApp(
+          title: 'do-nasi',
+          theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              primarySwatch: Colors.yellow,
+              // primaryColor: const Color.fromRGBO(255, 205, 46, 1),
+              fontFamily: 'Poppins'),
+          home: LoginPage(),
+          routes: {
+            // PENTING: ini nanti bakal diarahin ke on boarding page ya guys (menyusul)
+            "/login": (context) => LoginPage(),
+          }),
     );
   }
 }
-
