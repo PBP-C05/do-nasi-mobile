@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:date_count_down/countdown.dart';
 import 'package:do_nasi/model/page_overview_model.dart';
 import 'package:do_nasi/utils/page_overview_utils.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,23 @@ class PageOverview extends StatefulWidget {
 }
 
 class _PageOverviewState extends State<PageOverview> {
+  String countdown = "Loading...";
+  late Timer _timer;
+
+  @override
+  void initState(){
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    _timer.cancel();
+  }
+
   @override
   void refresh() {
     setState(() {});
@@ -24,13 +44,12 @@ class _PageOverviewState extends State<PageOverview> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.yellow[900],
+          backgroundColor: Colors.yellow[400],
           centerTitle: true,
           title: const Text('Page Overview'),
         ),
         body: FutureBuilder(
-          future:
-              request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
+          future: request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data != null) {
               final is_penyalur =
@@ -40,7 +59,8 @@ class _PageOverviewState extends State<PageOverview> {
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.data == null) {
                       return const Center(child: CircularProgressIndicator());
-                    } else {
+                    }
+                    else {
                       if (!snapshot.hasData) {
                         return Column(
                           children: const [
@@ -52,7 +72,8 @@ class _PageOverviewState extends State<PageOverview> {
                             SizedBox(height: 8),
                           ],
                         );
-                      } else {
+                      }
+                      else {
                         return ListView.builder(
                             itemCount: snapshot.data!.length,
                             itemBuilder: (_, index) {
@@ -95,18 +116,12 @@ class _PageOverviewState extends State<PageOverview> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Flexible(
-                                                child: Text(
-                                                    DateFormat('EEEE, MMM d, yyyy')
-                                                        .format(snapshot
-                                                        .data![index]
-                                                        .fields
-                                                        .deadline)))
+                                                child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
                                           ]),
                                         ])),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors
-                                              .yellow[900], // Background color
+                                          backgroundColor: Colors.yellow[400], // Background color
                                         ),
                                         onPressed: () {
                                           Navigator.push(
@@ -167,12 +182,7 @@ class _PageOverviewState extends State<PageOverview> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Flexible(
-                                                child: Text(
-                                                    DateFormat('EEEE, MMM d, yyyy')
-                                                        .format(snapshot
-                                                        .data![index]
-                                                        .fields
-                                                        .deadline)))
+                                                child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
                                           ]),
                                         ])),
                                   ],
@@ -223,32 +233,48 @@ class _PageOverviewState extends State<PageOverview> {
                                         ],
                                       ),
                                       Row(children: [
-                                        const Text(
+                                        Text(
                                           "Deadline       :",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
-                                            child: Text(
-                                                DateFormat('EEEE, MMM d, yyyy')
-                                                    .format(snapshot
-                                                        .data![index]
-                                                        .fields
-                                                        .deadline)))
+                                            child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired"," Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
                                       ]),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                        ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.yellow[
-                                                  900], // Background color
+                                            TextButton(
+                                              style: ButtonStyle(
+                                                backgroundColor: MaterialStateProperty.all(Colors.yellow[400]),
+                                              ),
+                                              onPressed: () async {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Dialog(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        ),
+                                                        insetPadding: const EdgeInsets.all(10),
+                                                        elevation: 15,
+                                                        child: ListView(
+                                                          padding:
+                                                          const EdgeInsets.only(top: 20, bottom: 20, left: 40, right: 40),
+                                                          shrinkWrap: true,
+                                                          children: const <Widget>[
+                                                            Center(
+                                                                child: Text('BERHASIl MELAKUKAN DONASI')),],
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                              },
+                                              child: const Text(
+                                                "MELAKUKAN DONASI",
+                                                style: TextStyle(color: Colors.black),
+                                              ),
                                             ),
-                                            onPressed: () {
-                                              Text("Berhasil melakukan donasi");
-                                            },
-                                            child:
-                                                const Text('MELAKUKAN DONASI'))
                                       ]),
                                     ]));
                               }
@@ -298,12 +324,7 @@ class _PageOverviewState extends State<PageOverview> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
-                                            child: Text(
-                                                DateFormat('EEEE, MMM d, yyyy')
-                                                    .format(snapshot
-                                                        .data![index]
-                                                        .fields
-                                                        .deadline)))
+                                            child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
                                       ]),
                                     ]));
                               }

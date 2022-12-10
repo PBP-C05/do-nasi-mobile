@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
         body: FutureBuilder(
             future: request
                 .get("https://do-nasi.up.railway.app/auth/get_user_json/"),
-            //request.get("http://127.0.0.1:8000/auth/get_user_json/"),
+            // request.get("http://127.0.0.1:8000/auth/get_user_json/"),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
@@ -36,7 +36,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(height: 8),
                     ],
                   );
-                } else {
+                }
+                else {
                   // child: Text("${snapshot.data['data']['email']}"),
                   return Column(children: [
                     const Padding(
@@ -62,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             const TextSpan(
                                 text: 'Email: ',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(text: snapshot.data['data']['email']),
+                            TextSpan(text: snapshot.data['data']["email"]),
                           ],
                         ),
                       ),
@@ -79,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           const TextSpan(
                               text: 'Nama: ',
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: snapshot.data['data']['name']),
+                          TextSpan(text: snapshot.data['data']["name"]),
                         ],
                       ),
                     ),
@@ -117,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Padding(
                         // Menggunakan padding sebesar 8 pixels
-                        padding: const EdgeInsets.only(top: 300),
+                        padding: const EdgeInsets.only(top: 100),
                         child: TextButton(
                             style: ButtonStyle(
                               backgroundColor:

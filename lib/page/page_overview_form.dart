@@ -33,7 +33,7 @@ class _MyFormPageState extends State<MyFormPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellow[900],
+        backgroundColor: Colors.yellow[400],
         centerTitle: true,
         title: const Text('Form Donasi'),
       ), // Menambahkan drawer menu
@@ -134,7 +134,7 @@ class _MyFormPageState extends State<MyFormPage> {
                     ))),
                 TextButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    backgroundColor: MaterialStateProperty.all(Colors.yellow[400]),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -160,7 +160,7 @@ class _MyFormPageState extends State<MyFormPage> {
                                     child: Text('Berhasil Ditambahkan')),
                                 ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.yellow[900], // Background color
+                                      backgroundColor: Colors.yellow[400], // Background color
                                     ),
                                     onPressed: () {
                                       Navigator.pop(context);
@@ -175,7 +175,7 @@ class _MyFormPageState extends State<MyFormPage> {
                   },
                   child: const Text(
                     "SAVE",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ],
