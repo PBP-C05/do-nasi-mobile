@@ -73,6 +73,7 @@ flutter:
      - assets/images/WorldHunger.jpg
      - assets/images/donatur.png
      - assets/images/penyalur.png
+     - assets/images/user.png
   fonts:
      - family: Poppins
        fonts:
