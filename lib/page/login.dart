@@ -147,10 +147,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           onPressed: () async {
                             if (_loginFormKey.currentState!.validate()) {
-                              // const url =
-                              //     "http://127.0.0.1:8000/auth/login_flutter/";
                               const url =
-                                  "https://do-nasi.up.railway.app/auth/login_flutter/";
+                                   "http://127.0.0.1:8000/auth/login_flutter/";
+                              //const url =
+                              //    "https://do-nasi.up.railway.app/auth/login_flutter/";
 
                               final response = await request.login(url, {
                                 "email": _controllerEmail.text,

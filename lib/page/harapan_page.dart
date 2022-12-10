@@ -27,8 +27,10 @@ class _HarapanPageState extends State<HarapanPage> {
   String _namaUser = "";
 
   Future<List<HarapanModel>> fetchHarapan() async {
-    var url =
-        Uri.parse('https://do-nasi.up.railway.app/harapan-donatur/show-json/');
+    //var url =
+    //    Uri.parse('https://do-nasi.up.railway.app/harapan-donatur/show-json/');
+
+    var url = Uri.parse("http://127.0.0.1:8000/harapan-donatur/show-json/");
     var response = await http.get(
       url,
       headers: {
@@ -105,7 +107,7 @@ class _HarapanPageState extends State<HarapanPage> {
                             return Column(
                               children: const [
                                 Text(
-                                  "Tidak ada My Watch List :(",
+                                  "Tidak ada harapan :(",
                                   style: TextStyle(
                                       color: Color(0xff59A5D8), fontSize: 20),
                                 ),
@@ -221,8 +223,10 @@ class _HarapanPageState extends State<HarapanPage> {
                       backgroundColor: Colors.blue.shade900,
                       // Colors.brown.shade800
                       child: FutureBuilder(
-                          future: request.get(
-                              "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                          //future: request.get(
+                          //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                          future: request
+                              .get("http://127.0.0.1:8000/auth/get_user_json/"),
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.data == null) {
                               return const Center(
@@ -241,8 +245,11 @@ class _HarapanPageState extends State<HarapanPage> {
                                   ],
                                 );
                               } else {
-                                return Text(_stringSplitter(
-                                    (snapshot.data['data']['name'])));
+                                return InkWell(
+                                  //Show Dialog Profile Nanti...
+                                  child: Text(_stringSplitter(
+                                      (snapshot.data['data']['name']))),
+                                );
                               }
                             }
                           }),
@@ -254,8 +261,10 @@ class _HarapanPageState extends State<HarapanPage> {
                       child: Form(
                         key: _formKey,
                         child: FutureBuilder(
+                            //future: request.get(
+                            //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
                             future: request.get(
-                                "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                                "http://127.0.0.1:8000/auth/get_user_json/"),
                             builder: (context, AsyncSnapshot snapshot) {
                               if (snapshot.data == null) {
                                 return const Center(
@@ -308,19 +317,42 @@ class _HarapanPageState extends State<HarapanPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: InkWell(
-                        onTap: () {
-                          if (_formKey.currentState!.validate() &&
-                              _harapanText != null) {}
-                        },
-                        hoverColor: const Color.fromARGB(0, 7, 168, 243),
-                        focusColor: const Color(0x000373fc),
-                        child: const Icon(
-                          Icons.send,
-                          size: 30,
-                          color: Color.fromARGB(255, 50, 132, 241),
-                        )),
+                    padding: const EdgeInsets.all(8.0),
+                    child: FutureBuilder(
+                      //future: request.get(
+                      //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                      future: request
+                          .get("http://127.0.0.1:8000/auth/get_user_json/"),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        return InkWell(
+                            onTap: () async {
+                              if (_formKey.currentState!.validate()) {
+                                //const url =
+                                //    "https://do-nasi.up.railway.app/harapan-donatur/show-json/";
+                                const url =
+                                    "http://127.0.0.1:8000/harapan-donatur/show-json/";
+
+                                await request.post(url, {
+                                  "user": snapshot.data['data']['user'],
+                                  "username": snapshot.data['data']['username'],
+                                  "email": DateTime.now(),
+                                  "created_at": snapshot.data['data']
+                                      ['created_at'],
+                                  "text": _harapanText,
+                                });
+                                print(url);
+                              }
+                            },
+                            hoverColor: const Color.fromARGB(0, 7, 168, 243),
+                            focusColor: const Color(0x000373fc),
+                            child: const Icon(
+                              Icons.send,
+                              size: 30,
+                              color: Color.fromARGB(255, 50, 132, 241),
+                            ));
+                      },
+                    ),
                   )
                 ],
               ),
