@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 // import 'package:do_nasi/page/profile.dart';
 import 'package:do_nasi/page/register.dart';
+import 'package:do_nasi/page/register.dart';
 
 import 'main_page.dart';
 
