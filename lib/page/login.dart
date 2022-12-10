@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-// import 'package:do_nasi/page/profile.dart';
 import 'package:do_nasi/page/register.dart';
 
 import 'main_page.dart';
@@ -32,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.white,
         title: Row(
@@ -147,31 +146,18 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           onPressed: () async {
                             if (_loginFormKey.currentState!.validate()) {
-                              // const url =
-                              //     "http://127.0.0.1:8000/auth/login_flutter/";
                               const url =
-                                  "https://do-nasi.up.railway.app/auth/login_flutter/";
+                                   "http://127.0.0.1:8000/auth/login_flutter/";
+                              //const url =
+                              //    "https://do-nasi.up.railway.app/auth/login_flutter/";
 
                               final response = await request.login(url, {
                                 "email": _controllerEmail.text,
                                 "password": _controllerPassword.text
                               });
 
-                              print("here response");
-                              print(response);
-                              // cara get responsenya
-                              print(response['status']);
-                              // kalo not authenticated nanti datanya null aja
-                              // (ini bisa)
-                              print(response['data' == null]);
-                              // buat cek role nanti
-                              if (response['status'] == true) {
-                                print("ya bisa");
-                              }
-
                               if (request.loggedIn) {
                                 showAlertDialog2(context);
-                                print("Alhamdulillah");
                               } else {
                                 showAlertDialog(context);
                               }
@@ -180,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           },
                           child: const Text(
-                            "Submit",
+                            "Log in",
                             style: TextStyle(fontSize: 15),
                           ),
                         ))
