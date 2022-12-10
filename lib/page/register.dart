@@ -1,23 +1,23 @@
+import 'package:do_nasi/page/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 // import 'package:do_nasi/page/profile.dart';
-import 'package:do_nasi/page/register.dart';
 
 import 'main_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
+class RegisterPage extends StatefulWidget {
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _loginFormKey = GlobalKey<FormState>();
+class _RegisterPageState extends State<RegisterPage> {
+  final _registerFormKey = GlobalKey<FormState>();
+  final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerUsername = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
+  String? _role = 'Penyalur';
 
   bool isPasswordVisible = false;
   void togglePasswordView() {
@@ -43,25 +43,56 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 5),
         child: ListView(
           children: <Widget>[
             Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: const Text(
-                  'Log in to Your Account',
+                  'Create Your Account',
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
                       fontSize: 25),
                 )),
             Form(
-              key: _loginFormKey,
+              key: _registerFormKey,
               child: Container(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 child: Column(
                   children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(250, 250, 250, 0.95),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: TextFormField(
+                        controller: _controllerName,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.person_outline,
+                              color: Color.fromRGBO(200, 200, 200, 1)),
+                          hintText: "Name",
+                          hintStyle: const TextStyle(
+                            color: Color.fromRGBO(200, 200, 200, 1),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(255, 205, 46, 1),
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nama tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
                     Container(
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(250, 250, 250, 0.95),
@@ -77,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
-                          hintText: 'Email',
+                          hintText: "Email",
                           prefixIcon: const Icon(Icons.email,
                               color: Color.fromRGBO(200, 200, 200, 1)),
                           hintStyle: const TextStyle(
@@ -93,7 +124,38 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(250, 250, 250, 0.95),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: TextFormField(
+                        controller: _controllerUsername,
+                        decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(255, 205, 46, 1),
+                            ),
+                          ),
+                          prefixIcon: const Icon(Icons.alternate_email,
+                              color: Color.fromRGBO(200, 200, 200, 1)),
+                          hintText: "Username",
+                          hintStyle: const TextStyle(
+                            color: Color.fromRGBO(200, 200, 200, 1),
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Username tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
                     Container(
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(250, 250, 250, 0.95),
@@ -134,7 +196,48 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
+                    Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1,
+                              color: const Color.fromRGBO(150, 150, 150, 1)),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            const ListTile(
+                              title: Text('Daftar sebagai:'),
+                              leading: Icon(Icons.people_alt,
+                                  color: Color.fromRGBO(200, 200, 200, 1)),
+                            ),
+                            ListTile(
+                              title: const Text('Penyalur'),
+                              leading: Radio<String>(
+                                value: 'Penyalur',
+                                groupValue: _role,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _role = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              title: const Text('Donatur'),
+                              leading: Radio<String>(
+                                value: 'Donatur',
+                                groupValue: _role,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _role = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        )),
+                    const SizedBox(height: 15),
                     Container(
                         width: 100,
                         height: 35,
@@ -146,43 +249,35 @@ class _LoginPageState extends State<LoginPage> {
                                 MaterialStateProperty.all<Color>(Colors.black),
                           ),
                           onPressed: () async {
-                            if (_loginFormKey.currentState!.validate()) {
+                            if (_registerFormKey.currentState!.validate()) {
                               // const url =
-                              //     "http://127.0.0.1:8000/auth/login_flutter/";
+                              //     "http://127.0.0.1:8000/auth/register_flutter/";
                               const url =
-                                  "https://do-nasi.up.railway.app/auth/login_flutter/";
+                                  "https://do-nasi.up.railway.app/auth/register_flutter/";
 
-                              final response = await request.login(url, {
+                              final response = await request.post(url, {
+                                "name": _controllerName.text,
                                 "email": _controllerEmail.text,
-                                "password": _controllerPassword.text
+                                "username": _controllerUsername.text,
+                                "password": _controllerPassword.text,
+                                "role": _role,
                               });
 
                               print("here response");
+                              //
                               print(response);
-                              // cara get responsenya
-                              print(response['status']);
-                              // kalo not authenticated nanti datanya null aja
-                              // (ini bisa)
-                              print(response['data' == null]);
-                              // buat cek role nanti
-                              if (response['status'] == true) {
-                                print("ya bisa");
-                              }
 
-                              if (request.loggedIn) {
-                                showAlertDialog2(context);
-                                print("Alhamdulillah");
-                              } else {
-                                showAlertDialog(context);
-                              }
+                              // if (request.loggedIn) {
+                              //   showAlertDialog2(context);
+                              //   print("Alhamdulillah");
+                              // } else {
+                              //   showAlertDialog(context);
+                              // }
                             } else {
                               print("tidak valid");
                             }
                           },
-                          child: const Text(
-                            "Submit",
-                            style: TextStyle(fontSize: 15),
-                          ),
+                          child: const Text("Submit"),
                         ))
                   ],
                 ),
@@ -191,10 +286,10 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text('Belum punya akun?'),
+                const Text('Sudah punya akun?'),
                 TextButton(
                   child: const Text(
-                    'Daftar di sini.',
+                    'Masuk di sini.',
                     style: TextStyle(
                       color: Color.fromRGBO(255, 205, 46, 1),
                     ),
@@ -202,7 +297,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     //signup screen
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => RegisterPage(),
+                      builder: (context) => LoginPage(),
                     ));
                   },
                 ),
@@ -217,35 +312,20 @@ class _LoginPageState extends State<LoginPage> {
 
 showAlertDialog(BuildContext context) {
   // set up the button
-  Widget tryButton = TextButton(
-    child: const Text(
-      "Try Again",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Color.fromRGBO(255, 205, 46, 1),
-      ),
-    ),
+  Widget okButton = TextButton(
+    child: const Text("Coba Lagi"),
     onPressed: () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => RegisterPage()));
     },
   );
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: const Text(
-      "Invalid Log In",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-    content: const Text(
-      "Email and password did not match, please try again.",
-      textAlign: TextAlign.center,
-    ),
+    title: const Text("Gagal!"),
+    content: const Text("Email dan password tidak cocok!"),
     actions: [
-      tryButton,
+      okButton,
     ],
   );
 
@@ -261,12 +341,7 @@ showAlertDialog(BuildContext context) {
 showAlertDialog2(BuildContext context) {
   // set up the button
   Widget okButton = TextButton(
-    child: const Text(
-      "Start Exploring",
-      style: TextStyle(
-        color: Color.fromRGBO(255, 205, 46, 1),
-      ),
-    ),
+    child: const Text("Close"),
     onPressed: () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const MainPage()));
@@ -275,17 +350,8 @@ showAlertDialog2(BuildContext context) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: const Text(
-      "Successfully Logged In",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-    content: const Text(
-      "Welcome back! :)",
-      textAlign: TextAlign.center,
-    ),
+    title: const Text("Selamat!"),
+    content: const Text("Anda berhasil login"),
     actions: [
       okButton,
     ],
