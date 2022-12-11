@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert' as convert;
 
 import '../model/harapan.dart';
 import 'home_page.dart';
@@ -22,15 +23,15 @@ class HarapanPage extends StatefulWidget {
 }
 
 class _HarapanPageState extends State<HarapanPage> {
-  final _formKey = GlobalKey<FormState>();
+  final _harapanFormKey = GlobalKey<FormState>();
   String _harapanText = "";
   String _namaUser = "";
 
   Future<List<HarapanModel>> fetchHarapan() async {
-    //var url =
-    //    Uri.parse('https://do-nasi.up.railway.app/harapan-donatur/show-json/');
+    var url =
+        Uri.parse('https://do-nasi.up.railway.app/harapan-donatur/show-json/');
 
-    var url = Uri.parse("http://127.0.0.1:8000/harapan-donatur/show-json/");
+    //var url = Uri.parse("http://127.0.0.1:8000/harapan-donatur/show-json/");
     var response = await http.get(
       url,
       headers: {
@@ -49,7 +50,7 @@ class _HarapanPageState extends State<HarapanPage> {
         listHarapan.add(HarapanModel.fromJson(d['fields']));
       }
     }
-
+    listHarapan.reversed;
     return listHarapan;
   }
 
@@ -77,10 +78,23 @@ class _HarapanPageState extends State<HarapanPage> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
-            Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+            IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const MainPage()));
+              },
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
+                Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+              ],
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width / 6)
           ],
         ),
       ),
@@ -94,6 +108,55 @@ class _HarapanPageState extends State<HarapanPage> {
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 4),
                   child: HarapanCarousel(),
                 ),
+                FutureBuilder(
+                    future: request.get(
+                        "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.data == null) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        if (!snapshot.hasData) {
+                          return Column(
+                            children: const [
+                              Text(
+                                "Silakan log in terlebih dahulu.",
+                                style: TextStyle(
+                                    color: Color(0xff59A5D8), fontSize: 20),
+                              ),
+                              SizedBox(height: 8),
+                            ],
+                          );
+                        } else {
+                          if (snapshot.data['data']['role'] == 'Donatur') {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                    child: Text(
+                                      'Apakah anda tertarik mengisi harapan, ${snapshot.data['data']['name']} ?',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Text(
+                              'Hai ${snapshot.data['data']['name']}, Silakan lihat pesan dari Para Donatur!',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 18),
+                              textAlign: TextAlign.center,
+                            );
+                          }
+                        }
+                      }
+                    }),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FutureBuilder(
@@ -193,17 +256,6 @@ class _HarapanPageState extends State<HarapanPage> {
                         }
                       }),
                 ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[900], // Background color
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MainPage()));
-                    },
-                    child: const Text('Back')),
               ])),
             ),
           ),
@@ -223,10 +275,10 @@ class _HarapanPageState extends State<HarapanPage> {
                       backgroundColor: Colors.blue.shade900,
                       // Colors.brown.shade800
                       child: FutureBuilder(
-                          //future: request.get(
-                          //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
-                          future: request
-                              .get("http://127.0.0.1:8000/auth/get_user_json/"),
+                          future: request.get(
+                              "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                          //future: request
+                          //    .get("http://127.0.0.1:8000/auth/get_user_json/"),
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.data == null) {
                               return const Center(
@@ -259,12 +311,12 @@ class _HarapanPageState extends State<HarapanPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Form(
-                        key: _formKey,
+                        key: _harapanFormKey,
                         child: FutureBuilder(
-                            //future: request.get(
-                            //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
                             future: request.get(
-                                "http://127.0.0.1:8000/auth/get_user_json/"),
+                                "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                            //future: request.get(
+                            //    "http://127.0.0.1:8000/auth/get_user_json/"),
                             builder: (context, AsyncSnapshot snapshot) {
                               if (snapshot.data == null) {
                                 return const Center(
@@ -319,30 +371,23 @@ class _HarapanPageState extends State<HarapanPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FutureBuilder(
-                      //future: request.get(
-                      //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
-                      future: request
-                          .get("http://127.0.0.1:8000/auth/get_user_json/"),
+                      future: request.get(
+                          "https://do-nasi.up.railway.app/auth/get_user_json/"),
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
                         return InkWell(
                             onTap: () async {
-                              if (_formKey.currentState!.validate()) {
-                                //const url =
-                                //    "https://do-nasi.up.railway.app/harapan-donatur/show-json/";
+                              if (_harapanFormKey.currentState!.validate()) {
                                 const url =
-                                    "http://127.0.0.1:8000/harapan-donatur/show-json/";
+                                    "https://do-nasi.up.railway.app/harapan-donatur/add-harapan/";
 
-                                await request.post(url, {
-                                  "user": snapshot.data['data']['user'],
-                                  "username": snapshot.data['data']['username'],
-                                  "email": DateTime.now(),
-                                  "created_at": snapshot.data['data']
-                                      ['created_at'],
-                                  "text": _harapanText,
-                                });
-                                print(url);
+                                await request.postJson(
+                                  url,
+                                  convert.jsonEncode({"text": _harapanText}),
+                                );
+                                _harapanFormKey.currentState?.reset();
                               }
+                              setState(() {});
                             },
                             hoverColor: const Color.fromARGB(0, 7, 168, 243),
                             focusColor: const Color(0x000373fc),
