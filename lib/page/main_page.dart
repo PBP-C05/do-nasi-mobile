@@ -2,6 +2,7 @@ import 'package:do_nasi/page/dummy_counter.dart';
 import 'package:do_nasi/page/harapan_page.dart';
 import 'package:do_nasi/page/home_page.dart';
 import 'package:do_nasi/page/profile.dart';
+import 'package:do_nasi/page/questions.dart';
 import 'package:do_nasi/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     const MyHomePage(),
     const DummyPage(), // Nanti ganti aja yg ini
-    const HarapanPage(), // Sama ini
+    const QuestionsPage(), // Sama ini
     const ProfilePage(),
   ];
 
