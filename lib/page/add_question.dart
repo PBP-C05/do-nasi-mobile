@@ -13,8 +13,8 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
   final _postFormKey = GlobalKey<FormState>();
   String inputTitle = "";
   String inputBody = "";
-  var _controllerTitle = TextEditingController();
-  var _controllerBody = TextEditingController();
+  final _controllerTitle = TextEditingController();
+  final _controllerBody = TextEditingController();
 
   void _showPopUpAfter() {
     showDialog(
