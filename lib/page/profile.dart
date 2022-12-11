@@ -23,7 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
-              } else {
+              }
+              else {
                 if (!snapshot.hasData) {
                   return Column(
                     children: const [

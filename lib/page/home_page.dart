@@ -1,4 +1,5 @@
 import 'package:do_nasi/page/harapan_page.dart';
+import 'package:do_nasi/page/page_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -244,7 +245,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         MaterialPageRoute(
                             builder: (context) => const HarapanPage()));
                   },
-                  child: const Text('Harapan Demo'))
+                  child: const Text('Harapan Demo')),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.yellow[900], // Background color
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PageOverview()));
+                  },
+                  child: const Text('Page Overview'))
             ],
           ),
         ),
