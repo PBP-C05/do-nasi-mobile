@@ -1,6 +1,7 @@
 import 'package:do_nasi/page/home_page.dart';
 import 'package:do_nasi/page/page_overview.dart';
 import 'package:do_nasi/page/profile.dart';
+import 'package:do_nasi/page/questions.dart';
 import 'package:do_nasi/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
