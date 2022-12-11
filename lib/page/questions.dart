@@ -17,6 +17,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text("Question and Answer"),
+        foregroundColor: Colors.white,
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
