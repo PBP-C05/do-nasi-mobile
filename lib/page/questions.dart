@@ -16,11 +16,13 @@ class _QuestionsPageState extends State<QuestionsPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        title: Text("Question and Answer"),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Stack(
         children: [
+          // bakal diganti sama image
           const SizedBox(
             width: 500,
             height: 500,
