@@ -214,7 +214,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       Row(
                                         children: [
                                           const Text(
-                                            "Title                   : ",
+                                            "Title                     :   ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -231,7 +231,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       Row(
                                         children: [
                                           const Text(
-                                            "Description : ",
+                                            "Description   :   ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -247,7 +247,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       ),
                                       Row(children: [
                                         const Text(
-                                          "Deadline        :",
+                                          "Deadline          :  ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -256,7 +256,7 @@ class _PageOverviewState extends State<PageOverview> {
                                           '${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 13),
+                                              fontSize: 9),
                                           textAlign: TextAlign.left,
                                         ))
                                       ]),
@@ -331,7 +331,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       Row(
                                         children: [
                                           const Text(
-                                            "Title                   : ",
+                                            "Title                     :   ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -348,7 +348,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       Row(
                                         children: [
                                           const Text(
-                                            "Description : ",
+                                            "Description   :   ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -364,7 +364,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       ),
                                       Row(children: [
                                         const Text(
-                                          "Deadline        :",
+                                          "Deadline          :  ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -373,7 +373,7 @@ class _PageOverviewState extends State<PageOverview> {
                                           '${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 13),
+                                              fontSize: 9),
                                           textAlign: TextAlign.justify,
                                         ))
                                       ]),
