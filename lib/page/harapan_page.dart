@@ -27,10 +27,10 @@ class _HarapanPageState extends State<HarapanPage> {
   String _namaUser = "";
 
   Future<List<HarapanModel>> fetchHarapan() async {
-    //var url =
-    //    Uri.parse('https://do-nasi.up.railway.app/harapan-donatur/show-json/');
+    var url =
+        Uri.parse('https://do-nasi.up.railway.app/harapan-donatur/show-json/');
 
-    var url = Uri.parse("http://127.0.0.1:8000/harapan-donatur/show-json/");
+    // var url = Uri.parse("http://127.0.0.1:8000/harapan-donatur/show-json/");
     var response = await http.get(
       url,
       headers: {
@@ -223,10 +223,10 @@ class _HarapanPageState extends State<HarapanPage> {
                       backgroundColor: Colors.blue.shade900,
                       // Colors.brown.shade800
                       child: FutureBuilder(
-                          //future: request.get(
-                          //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
-                          future: request
-                              .get("http://127.0.0.1:8000/auth/get_user_json/"),
+                          future: request.get(
+                              "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                          // future: request
+                          //     .get("http://127.0.0.1:8000/auth/get_user_json/"),
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.data == null) {
                               return const Center(
@@ -261,10 +261,10 @@ class _HarapanPageState extends State<HarapanPage> {
                       child: Form(
                         key: _formKey,
                         child: FutureBuilder(
-                            //future: request.get(
-                            //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
                             future: request.get(
-                                "http://127.0.0.1:8000/auth/get_user_json/"),
+                                "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                            // future: request.get(
+                            //     "http://127.0.0.1:8000/auth/get_user_json/"),
                             builder: (context, AsyncSnapshot snapshot) {
                               if (snapshot.data == null) {
                                 return const Center(
@@ -319,10 +319,10 @@ class _HarapanPageState extends State<HarapanPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FutureBuilder(
-                      //future: request.get(
-                      //    "https://do-nasi.up.railway.app/auth/get_user_json/"),
-                      future: request
-                          .get("http://127.0.0.1:8000/auth/get_user_json/"),
+                      future: request.get(
+                          "https://do-nasi.up.railway.app/auth/get_user_json/"),
+                      // future: request
+                      //     .get("http://127.0.0.1:8000/auth/get_user_json/"),
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
                         return InkWell(
