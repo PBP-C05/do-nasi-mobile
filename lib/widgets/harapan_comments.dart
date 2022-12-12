@@ -219,7 +219,7 @@ class _HarapanCommentsState extends State<HarapanComments> {
                                           },
                                           // Validator sebagai validasi form
                                           validator: (String? value) {
-                                            if (value == null ||
+                                            if (value!.trim().isEmpty ||
                                                 value.isEmpty) {
                                               return null;
                                             }
@@ -245,19 +245,21 @@ class _HarapanCommentsState extends State<HarapanComments> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                     onTap: () async {
-                                      if (_harapanFormKey.currentState!
-                                          .validate()) {
-                                        const url =
-                                            "https://do-nasi.up.railway.app/harapan-donatur/add-harapan/";
+                                      if (_harapanText.trim().isNotEmpty) {
+                                        if (_harapanFormKey.currentState!
+                                            .validate()) {
+                                          const url =
+                                              "https://do-nasi.up.railway.app/harapan-donatur/add-harapan/";
 
-                                        await request.postJson(
-                                          url,
-                                          convert.jsonEncode(
-                                              {"text": _harapanText}),
-                                        );
-                                        _harapanFormKey.currentState?.reset();
+                                          await request.postJson(
+                                            url,
+                                            convert.jsonEncode(
+                                                {"text": _harapanText}),
+                                          );
+                                          _harapanFormKey.currentState?.reset();
+                                        }
+                                        setState(() {});
                                       }
-                                      setState(() {});
                                     },
                                     hoverColor:
                                         const Color.fromARGB(0, 7, 168, 243),
