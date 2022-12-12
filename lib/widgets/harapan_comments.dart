@@ -125,7 +125,7 @@ class _HarapanCommentsState extends State<HarapanComments> {
                                                                       .black,
                                                                   size: 24.0,
                                                                 ),
-                                                                SizedBox(
+                                                                const SizedBox(
                                                                     width: 5),
                                                                 Text(
                                                                     snapshot.data[
@@ -221,7 +221,7 @@ class _HarapanCommentsState extends State<HarapanComments> {
                                           validator: (String? value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Harapan anda masih kosong !';
+                                              return null;
                                             }
                                             return null;
                                           },
