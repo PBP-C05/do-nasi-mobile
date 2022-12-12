@@ -21,7 +21,8 @@ class PageOverview extends StatefulWidget {
 class _PageOverviewState extends State<PageOverview> {
   String countdown = "Loading...";
   late Timer _timer;
-
+  bool visible = false;
+  
   @override
   void initState(){
     super.initState();
@@ -45,19 +46,30 @@ class _PageOverviewState extends State<PageOverview> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
+      bottomNavigationBar: Visibility(
+        visible: visible,  
+        child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow[400],
+                        padding: const EdgeInsets.all(20.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    MyFormPage(
+                                        setparent: refresh)));
+                      },
+                      child: const Text('TAMBAH DONASI')),
+                  
+      ),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title:
-        Row(
+        title:Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const MainPage()));
-              },
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -68,7 +80,7 @@ class _PageOverviewState extends State<PageOverview> {
             SizedBox(width: MediaQuery.of(context).size.width / 6)
           ],
         ),
-      ),
+        ),
         body:
           FutureBuilder(
           future: request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
@@ -76,6 +88,9 @@ class _PageOverviewState extends State<PageOverview> {
             if (snapshot.data != null) {
               final is_penyalur =
                   snapshot.data['data']['role'] == "Penyalur" ? true : false;
+              if (is_penyalur){
+                visible = true;
+              }
               final name = snapshot.data['data']['name'];
               return FutureBuilder(
                   future: fetchPageOverview(request),
@@ -100,77 +115,7 @@ class _PageOverviewState extends State<PageOverview> {
                         return ListView.builder(
                             itemCount: snapshot.data!.length,
                             itemBuilder: (_, index) {
-                              if (index == snapshot.data!.length - 1 && is_penyalur) {
-                                const Text("Page Overview"); 
-                                return Column(
-                                  children: [
-                                    Container(
-                                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                                        padding: const EdgeInsets.all(32.0),
-                                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15.0), boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2.0)]),
-                                        child: Column(children: [
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                "Title                   : ",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Flexible(
-                                                  child: Text('${snapshot
-                                                      .data![index].fields.title} ',
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                  ))
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                "Description : ",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Flexible(
-                                                  child: Text('${snapshot.data![index]
-                                                      .fields.description} ',
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                      ))
-                                            ],
-                                          ),
-                                          Row(children: [
-                                            const Text(
-                                              "Deadline        :",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Flexible(
-                                                child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")} ',
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                       ))
-                                          ]),
-                                        ])),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.yellow[400], // Background color
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MyFormPage(
-                                                          setparent: refresh)));
-                                        },
-                                        child: const Text('TAMBAH DONASI'))],
-                                );
-                              }
-                              else if (is_penyalur) {
+                              if (is_penyalur && visible) {
                                 return Column(
                                   children: [
                                     Container(
@@ -232,6 +177,7 @@ class _PageOverviewState extends State<PageOverview> {
                                                       fontSize: 13),
                                                         textAlign: TextAlign.left,))
                                           ]),
+                                        
                                         ])),
                                   ],
                                 );
@@ -338,7 +284,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       ]),
                                     ]));
                               }
-                                else {
+                              else{
                                 return Container(
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 12),
@@ -400,6 +346,7 @@ class _PageOverviewState extends State<PageOverview> {
                                       ]),
                                     ]));
                               }
+
                             });
                       }
                     }
