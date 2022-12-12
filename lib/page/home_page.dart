@@ -18,12 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // APP BAR IF NEEDED
 
       body: Center(
-        child: DraggableScrollableSheet(
-            initialChildSize: 0.85,
-            minChildSize: 0.85,
-            maxChildSize: 1,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return Container(
+        child: Container(
                   padding: const EdgeInsets.only(top: 1),
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 250, 250, 250),
@@ -33,7 +28,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   child: SingleChildScrollView(
-                    controller: scrollController,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -333,8 +327,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: const Text('Page Overview'))
                       ],
                     ),
-                  ));
-            }),
+                  )
+              ),
+            
       ),
     );
   }

@@ -31,7 +31,7 @@ class _QuestionDetailPageState extends State<QuestionDetailPage> {
           )
         ),
         backgroundColor: Colors.white,
-        foregroundColor: Color.fromARGB(255, 135, 191, 6),
+        foregroundColor: Color.fromARGB(255, 126, 5, 5),
         shadowColor: Color.fromARGB(28, 113, 113, 105),
         elevation: 4,
       ),
@@ -44,8 +44,8 @@ class _QuestionDetailPageState extends State<QuestionDetailPage> {
               padding: const EdgeInsets.only(top:16, left: 28, right: 28),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Judul dan konten post
                   Center(
@@ -112,75 +112,84 @@ class _QuestionDetailPageState extends State<QuestionDetailPage> {
             ),
           ),
           // COMMENT FORM
-          Align(
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: SizedBox(
-                width: 360,
-                child: Form(
-                  key: _commentFormKey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _controllerBody,
-                      // DECORATION
-                      minLines: 1,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        hintText: "Comment...",
-                        fillColor: Color.fromARGB(255, 255, 255, 255),
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(28),
-                        ),
-                        // SUBMIT BUTTON
-                        suffixIcon: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 215, 166, 30),
-                            shape: const CircleBorder(),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: SizedBox(
+                    width: 360,
+                    child: Form(
+                      key: _commentFormKey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _controllerBody,
+                          // DECORATION
+                          minLines: 1,
+                          maxLines: 3,
+                          decoration: InputDecoration(
+                            hintText: "Comment...",
+                            fillColor: Color.fromARGB(255, 255, 255, 255),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                            ),
+                            // SUBMIT BUTTON
+                            suffixIcon: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromARGB(255, 215, 166, 30),
+                                shape: const CircleBorder(),
+                              ),
+                              child: const Icon(
+                                Icons.send_rounded,
+                                color: Colors.white,
+                              ),
+                              onPressed: () async {
+                                if (_commentFormKey.currentState!.validate()) {
+                                  _commentFormKey.currentState!.save();
+                                  var url =
+                                      'https://do-nasi.up.railway.app/questions/add-comment/${widget.post.pk}';
+                                  // 'http://127.0.0.1:8000/questions/add-comment/${widget.post.pk}';
+                                  final response = await request.post(url, {'body': inputBody});
+                                  // refresh
+                                  setState(() {});
+                                }
+                              },
+                            ),
                           ),
-                          child: const Icon(
-                            Icons.send_rounded,
-                            color: Colors.white,
-                          ),
-                          onPressed: () async {
-                            if (_commentFormKey.currentState!.validate()) {
-                              _commentFormKey.currentState!.save();
-                              var url =
-                                  'https://do-nasi.up.railway.app/questions/add-comment/${widget.post.pk}';
-                              // 'http://127.0.0.1:8000/questions/add-comment/${widget.post.pk}';
-                              final response = await request.post(url, {'body': inputBody});
-                              // refresh
-                              setState(() {});
+                          // DECORATION ON TYPE
+                          onChanged: (String? value) {
+                            setState(() {
+                              inputBody = value!;
+                            });
+                          },
+                          // VALIDATOR
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Tidak bisa mengirim komentar kosong";
                             }
+                            return null;
+                          },
+                          // BEHAVIOUR ON STORING DATA
+                          onSaved: (String? value) {
+                            setState(() {
+                              inputBody = value!;
+                            });
+                            _controllerBody.clear();
                           },
                         ),
                       ),
-                      // DECORATION ON TYPE
-                      onChanged: (String? value) {
-                        setState(() {
-                          inputBody = value!;
-                        });
-                      },
-                      // VALIDATOR
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "Tidak bisa mengirim komentar kosong";
-                        }
-                        return null;
-                      },
-                      // BEHAVIOUR ON STORING DATA
-                      onSaved: (String? value) {
-                        setState(() {
-                          inputBody = value!;
-                        });
-                        _controllerBody.clear();
-                      },
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ],
