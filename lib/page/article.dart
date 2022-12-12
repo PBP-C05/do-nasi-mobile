@@ -7,14 +7,6 @@ import 'package:do_nasi/page/article_detail.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-// class HtmlTags {
-//   static removeTag({htmlString, callback}) {
-//     var document = parse(htmlString);
-//     var parsedString = parse(document.body?.text).documentElement?.text;
-//     callback(parsedString);
-//   }
-// }
-
 class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key});
 
@@ -52,12 +44,6 @@ class _MyHomePageState extends State<ArticlePage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
 
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Container(
         // decoration: BoxDecoration(
         //   image: DecorationImage(
@@ -83,8 +69,6 @@ class _MyHomePageState extends State<ArticlePage> {
       ),
       backgroundColor: Colors.white,
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
 
             // horizontal).
@@ -92,11 +76,11 @@ class _MyHomePageState extends State<ArticlePage> {
             children: [
               Container(
                 height: 50,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        opacity: 0.5,
-                        image: AssetImage("assets/images/article_image.png"),
-                        fit: BoxFit.cover)),
+                // decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //         opacity: 0.5,
+                //         image: AssetImage("assets/images/article_image.png"),
+                //         fit: BoxFit.cover)),
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                 child: Row(children: [
                   Column(
@@ -214,11 +198,6 @@ class _MyHomePageState extends State<ArticlePage> {
                         }
                       }
                     }),
-                //   decoration: BoxDecoration(
-                //       color: Color.fromARGB(1, 255, 255, 255),
-                //       borderRadius: BorderRadius.only(
-                //           topRight: Radius.circular(30.0),
-                //           topLeft: Radius.circular(30.0))),
               ))
             ]),
       ),

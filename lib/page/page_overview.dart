@@ -21,9 +21,10 @@ class PageOverview extends StatefulWidget {
 class _PageOverviewState extends State<PageOverview> {
   String countdown = "Loading...";
   late Timer _timer;
+  bool visible = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {});
@@ -31,7 +32,7 @@ class _PageOverviewState extends State<PageOverview> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     _timer.cancel();
   }
@@ -45,45 +46,61 @@ class _PageOverviewState extends State<PageOverview> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title:
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const MainPage()));
-              },
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
-                Image.asset('assets/images/logo.png', fit: BoxFit.cover),
-              ],
-            ),
-            SizedBox(width: MediaQuery.of(context).size.width / 6)
-          ],
+        bottomNavigationBar: Visibility(
+          visible: visible,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 250, 198, 26),
+                  padding: const EdgeInsets.all(20.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MyFormPage(setparent: refresh)));
+                },
+                child: const Text('TAMBAH DONASI')),
+          ),
         ),
-      ),
-        body:
-          FutureBuilder(
-          future: request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
+                  Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+                ],
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width / 6)
+            ],
+          ),
+        ),
+        body: FutureBuilder(
+          future:
+              request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data != null) {
               final is_penyalur =
                   snapshot.data['data']['role'] == "Penyalur" ? true : false;
+              if (is_penyalur) {
+                visible = true;
+              }
               final name = snapshot.data['data']['name'];
               return FutureBuilder(
                   future: fetchPageOverview(request),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.data == null) {
                       return const Center(child: CircularProgressIndicator());
-                    }
-                    else {
+                    } else {
+                      
                       if (!snapshot.hasData) {
                         return Column(
                           children: const [
@@ -95,82 +112,12 @@ class _PageOverviewState extends State<PageOverview> {
                             SizedBox(height: 8),
                           ],
                         );
-                      }
-                      else {
+                      } else {
+                        
                         return ListView.builder(
                             itemCount: snapshot.data!.length,
                             itemBuilder: (_, index) {
-                              if (index == snapshot.data!.length - 1 && is_penyalur) {
-                                const Text("Page Overview"); 
-                                return Column(
-                                  children: [
-                                    Container(
-                                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                                        padding: const EdgeInsets.all(32.0),
-                                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15.0), boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2.0)]),
-                                        child: Column(children: [
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                "Title                   : ",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Flexible(
-                                                  child: Text('${snapshot
-                                                      .data![index].fields.title} ',
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                  ))
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                "Description : ",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Flexible(
-                                                  child: Text('${snapshot.data![index]
-                                                      .fields.description} ',
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                      ))
-                                            ],
-                                          ),
-                                          Row(children: [
-                                            const Text(
-                                              "Deadline        :",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Flexible(
-                                                child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")} ',
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                       ))
-                                          ]),
-                                        ])),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.yellow[400], // Background color
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MyFormPage(
-                                                          setparent: refresh)));
-                                        },
-                                        child: const Text('TAMBAH DONASI'))],
-                                );
-                              }
-                              else if (is_penyalur) {
+                              if (is_penyalur && visible) {
                                 return Column(
                                   children: [
                                     Container(
@@ -190,53 +137,61 @@ class _PageOverviewState extends State<PageOverview> {
                                           Row(
                                             children: [
                                               const Text(
-                                                "Title                   : ",
+                                                "Title                        :   ",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                               Flexible(
-                                                  child: Text('${snapshot
-                                                      .data![index].fields.title}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                      ))
+                                                  child: Text(
+                                                '${snapshot.data![index].fields.title}',
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 13),
+                                              ))
                                             ],
                                           ),
                                           Row(
                                             children: [
                                               const Text(
-                                                "Description : ",
+                                                "Description      :   ",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                               Flexible(
-                                                  child: Text('${snapshot.data![index]
-                                                      .fields.description}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                       ))
+                                                  child: Text(
+                                                '${snapshot.data![index].fields.description}',
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 13),
+                                              ))
                                             ],
                                           ),
-                                          Row(children: [
-                                            const Text(
-                                              "Deadline        :",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Flexible(
-                                                child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                        textAlign: TextAlign.left,))
-                                          ]),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 6, 6, 6),
+                                            child: Row(children: [
+                                              const Text(
+                                                "Deadline          :  ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                              ),
+                                              Flexible(
+                                                  child: Text(
+                                                '${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}',
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 9),
+                                                textAlign: TextAlign.left,
+                                              ))
+                                            ]),
+                                          ),
                                         ])),
                                   ],
                                 );
-                              }
-                                else if (DateTime.parse(snapshot
+                              } else if (DateTime.parse(snapshot
                                           .data![index].fields.deadline
                                           .toString())
                                       .isAfter(DateTime.parse(
@@ -264,12 +219,13 @@ class _PageOverviewState extends State<PageOverview> {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text('${snapshot
-                                                  .data![index].fields.title}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                        textAlign: TextAlign.left,))
+                                              child: Text(
+                                            '${snapshot.data![index].fields.title}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 13),
+                                            textAlign: TextAlign.left,
+                                          ))
                                         ],
                                       ),
                                       Row(
@@ -280,65 +236,84 @@ class _PageOverviewState extends State<PageOverview> {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text('${snapshot.data![index]
-                                                  .fields.description}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                        textAlign: TextAlign.left,))
+                                              child: Text(
+                                            '${snapshot.data![index].fields.description}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 13),
+                                            textAlign: TextAlign.left,
+                                          ))
                                         ],
                                       ),
                                       Row(children: [
-                                         const Text(
-                                         "Deadline        :",
+                                        const Text(
+                                          "Deadline        :",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
-                                            child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired"," Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                        textAlign: TextAlign.left,))
+                                            child: Text(
+                                          '${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 13),
+                                          textAlign: TextAlign.left,
+                                        ))
                                       ]),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             TextButton(
                                               style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(Colors.yellow[400]),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.yellow[400]),
                                               ),
                                               onPressed: () async {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Dialog(
-                                                        shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                        ),
-                                                        insetPadding: const EdgeInsets.all(10),
-                                                        elevation: 15,
-                                                        child: ListView(
-                                                          padding:
-                                                          const EdgeInsets.only(top: 20, bottom: 20, left: 40, right: 40),
-                                                          shrinkWrap: true,
-                                                          children: const <Widget>[
-                                                            Center(
-                                                                child: Text('BERHASIl MELAKUKAN DONASI')),],
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Dialog(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      insetPadding:
+                                                          const EdgeInsets.all(
+                                                              10),
+                                                      elevation: 15,
+                                                      child: ListView(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                top: 20,
+                                                                bottom: 20,
+                                                                left: 40,
+                                                                right: 40),
+                                                        shrinkWrap: true,
+                                                        children: const <
+                                                            Widget>[
+                                                          Center(
+                                                              child: Text(
+                                                                  'BERHASIl MELAKUKAN DONASI')),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                );
                                               },
                                               child: const Text(
                                                 "MELAKUKAN DONASI",
-                                                style: TextStyle(color: Colors.black),
+                                                style: TextStyle(
+                                                    color: Colors.black),
                                               ),
                                             ),
-                                      ]),
+                                          ]),
                                     ]));
-                              }
-                                else {
+                              } else {
                                 return Container(
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 12),
@@ -361,12 +336,13 @@ class _PageOverviewState extends State<PageOverview> {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text('${snapshot
-                                                  .data![index].fields.title}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                        textAlign: TextAlign.justify,))
+                                              child: Text(
+                                            '${snapshot.data![index].fields.title}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 13),
+                                            textAlign: TextAlign.justify,
+                                          ))
                                         ],
                                       ),
                                       Row(
@@ -377,12 +353,13 @@ class _PageOverviewState extends State<PageOverview> {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text('${snapshot.data![index]
-                                                  .fields.description}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                        textAlign: TextAlign.justify,))
+                                              child: Text(
+                                            '${snapshot.data![index].fields.description}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 13),
+                                            textAlign: TextAlign.justify,
+                                          ))
                                         ],
                                       ),
                                       Row(children: [
@@ -392,11 +369,13 @@ class _PageOverviewState extends State<PageOverview> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
-                                            child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}' ,
-                                                       style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 13),
-                                                        textAlign: TextAlign.justify,))
+                                            child: Text(
+                                          '${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 13),
+                                          textAlign: TextAlign.justify,
+                                        ))
                                       ]),
                                     ]));
                               }
