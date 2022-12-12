@@ -66,7 +66,18 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
     // print(request.toString());
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Tambah Post Baru"),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(16),
+          )
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Color.fromARGB(255, 126, 5, 5),
+        shadowColor: Color.fromARGB(28, 113, 113, 105),
+        elevation: 4,
+      ),
       body: Form(
         key: _postFormKey,
         child: SingleChildScrollView(
@@ -163,6 +174,13 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
                         _showPopUpAfter();
                       }
                     },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 255, 175, 15),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
                     child: const Text("Kirim"),
                   ),
                 ),

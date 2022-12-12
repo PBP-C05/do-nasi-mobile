@@ -22,7 +22,7 @@ class _QuestionDetailPageState extends State<QuestionDetailPage> {
     final request = context.watch<CookieRequest>();
     
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text("Post"),
         shape: const RoundedRectangleBorder(
