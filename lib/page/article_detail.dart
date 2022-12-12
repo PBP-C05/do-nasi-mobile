@@ -255,7 +255,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
                                               child: Text(
                                                 "${snapshot.data![index].fields.name.name}",
                                                 style: const TextStyle(
-                                                  fontSize: 20.0,
+                                                  fontSize: 19.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
