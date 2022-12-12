@@ -1,3 +1,4 @@
+import 'package:do_nasi/page/article_detail.dart';
 import 'package:do_nasi/page/harapan_page.dart';
 import 'package:do_nasi/page/home_page.dart';
 import 'package:do_nasi/page/page_overview.dart';
@@ -18,12 +19,8 @@ class _MainPageState extends State<MainPage> {
   int navbarIndex = 0;
   final screens = [
     const MyHomePage(),
-<<<<<<< HEAD
-    const ArticlePage(),
-=======
->>>>>>> d933ff9505aa70ab6c9e60eca878e3d5b1553eb9
     const QuestionsPage(),
-    const PageOverview(), // Tambah ARTICLE PAGE
+    const ArticlePage(), // Tambah ARTICLE PAGE
     const ProfilePage(),
   ];
 
