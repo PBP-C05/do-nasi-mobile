@@ -1,4 +1,6 @@
+import 'package:do_nasi/utils/fetch_harapan.dart';
 import 'package:do_nasi/widgets/harapan_carousel.dart';
+import 'package:do_nasi/widgets/harapan_comments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert' as convert;
 
 import '../model/harapan.dart';
 import 'home_page.dart';
@@ -22,8 +25,9 @@ class HarapanPage extends StatefulWidget {
 }
 
 class _HarapanPageState extends State<HarapanPage> {
-  final _formKey = GlobalKey<FormState>();
+  final _harapanFormKey = GlobalKey<FormState>();
   String _harapanText = "";
+<<<<<<< HEAD
   String _namaUser = "";
 
   Future<List<HarapanModel>> fetchHarapan() async {
@@ -52,6 +56,8 @@ class _HarapanPageState extends State<HarapanPage> {
 
     return listHarapan;
   }
+=======
+>>>>>>> 93cd048af4aaea6cb1f1fc7ce466cde0b0d92223
 
   String _stringSplitter(String input) {
     String result = "";
@@ -64,10 +70,6 @@ class _HarapanPageState extends State<HarapanPage> {
     return result;
   }
 
-  String _stringGetter(String input) {
-    return input;
-  }
-
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -75,18 +77,24 @@ class _HarapanPageState extends State<HarapanPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
-            Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
+                Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+              ],
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width / 6)
           ],
         ),
       ),
       body: Column(
         children: [
           Expanded(
+<<<<<<< HEAD
             child: SingleChildScrollView(
               child: Center(
                   child: Column(children: [
@@ -227,6 +235,24 @@ class _HarapanPageState extends State<HarapanPage> {
                               "https://do-nasi.up.railway.app/auth/get_user_json/"),
                           // future: request
                           //     .get("http://127.0.0.1:8000/auth/get_user_json/"),
+=======
+            child: DraggableScrollableSheet(
+                initialChildSize: 1,
+                minChildSize: 1,
+                maxChildSize: 1,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return SingleChildScrollView(
+                    child: Center(
+                        child: Column(children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 4),
+                        child: HarapanCarousel(),
+                      ),
+                      FutureBuilder(
+                          future: request.get(
+                              "https://do-nasi.up.railway.app/auth/get_user_json/"),
+>>>>>>> 93cd048af4aaea6cb1f1fc7ce466cde0b0d92223
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.data == null) {
                               return const Center(
@@ -245,6 +271,7 @@ class _HarapanPageState extends State<HarapanPage> {
                                   ],
                                 );
                               } else {
+<<<<<<< HEAD
                                 return InkWell(
                                   //Show Dialog Profile Nanti...
                                   child: Text(_stringSplitter(
@@ -281,37 +308,43 @@ class _HarapanPageState extends State<HarapanPage> {
                                       ),
                                       SizedBox(height: 8),
                                     ],
+=======
+                                if (snapshot.data['data']['role'] ==
+                                    'Donatur') {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              15, 0, 15, 0),
+                                          child: Text(
+                                            'Apakah anda tertarik mengisi harapan, ${snapshot.data['data']['name']} ?',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+>>>>>>> 93cd048af4aaea6cb1f1fc7ce466cde0b0d92223
                                   );
                                 } else {
-                                  return TextFormField(
-                                    style: const TextStyle(fontSize: 12),
-                                    decoration: InputDecoration(
-                                        hintText:
-                                            ("Harapan dari ${snapshot.data['data']['username']} ....."),
-                                        // Menambahkan circular border agar lebih rapi
-                                        border: InputBorder.none),
-                                    // Menambahkan behavior saat nama diketik
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        _harapanText = value!;
-                                      });
-                                    },
-                                    // Menambahkan behavior saat data disimpan
-                                    onSaved: (String? value) {
-                                      setState(() {
-                                        _harapanText = value!;
-                                      });
-                                    },
-                                    // Validator sebagai validasi form
-                                    validator: (String? value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Harapan anda masih kosong !';
-                                      }
-                                      return null;
-                                    },
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                    child: Text(
+                                      'Hai ${snapshot.data['data']['name']}, Silakan lihat pesan dari Para Donatur!',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   );
                                 }
                               }
+<<<<<<< HEAD
                             }),
                       ),
                     ),
@@ -358,6 +391,19 @@ class _HarapanPageState extends State<HarapanPage> {
               ),
             ),
           )
+=======
+                            }
+                          }),
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:
+                              FetchHarapan(scrollController: scrollController)),
+                    ])),
+                  );
+                }),
+          ),
+          const HarapanComments()
+>>>>>>> 93cd048af4aaea6cb1f1fc7ce466cde0b0d92223
         ],
       ),
     );
