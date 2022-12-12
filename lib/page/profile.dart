@@ -17,20 +17,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
         body: FutureBuilder(
-<<<<<<< HEAD
             future: request
                 .get("https://do-nasi.up.railway.app/auth/get_user_json/"),
-            // request.get("http://127.0.0.1:8000/auth/get_user_json/"),
-=======
-            future:
-                request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
-                //request.get("http://127.0.0.1:8000/auth/get_user_json/"),
->>>>>>> 93cd048af4aaea6cb1f1fc7ce466cde0b0d92223
+            //request.get("http://127.0.0.1:8000/auth/get_user_json/"),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
-              }
-              else {
+              } else {
                 if (!snapshot.hasData) {
                   return Column(
                     children: const [

@@ -146,13 +146,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           onPressed: () async {
                             if (_loginFormKey.currentState!.validate()) {
-<<<<<<< HEAD
-                              // const url =
-                              //      "http://127.0.0.1:8000/auth/login_flutter/";
-=======
                               //const url =
                               //     "http://127.0.0.1:8000/auth/login_flutter/";
->>>>>>> 93cd048af4aaea6cb1f1fc7ce466cde0b0d92223
                               const url =
                                   "https://do-nasi.up.railway.app/auth/login_flutter/";
 
