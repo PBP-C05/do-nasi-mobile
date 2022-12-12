@@ -17,23 +17,24 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     const MyHomePage(),
     const PageOverview(),
+    const QuestionsPage(),
     const ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   automaticallyImplyLeading: false,
-      //   title: Row(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
-      //       Image.asset('assets/images/logo.png', fit: BoxFit.cover),
-      //     ],
-      //   ),
-      // ),
+      appBar: AppBar(
+         backgroundColor: Colors.white,
+         automaticallyImplyLeading: false,
+         title: Row(
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+             Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
+             Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+           ],
+         ),
+       ),
       body: screens[navbarIndex],
       bottomNavigationBar: BottomNavBar(
         onTap: (value) => setState(() {

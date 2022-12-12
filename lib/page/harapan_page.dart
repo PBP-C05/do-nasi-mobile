@@ -100,69 +100,22 @@ class _HarapanPageState extends State<HarapanPage> {
       body: Column(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: Center(
-                  child: Column(children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 4),
-                  child: HarapanCarousel(),
-                ),
-                FutureBuilder(
-                    future: request.get(
-                        "https://do-nasi.up.railway.app/auth/get_user_json/"),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.data == null) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else {
-                        if (!snapshot.hasData) {
-                          return Column(
-                            children: const [
-                              Text(
-                                "Silakan log in terlebih dahulu.",
-                                style: TextStyle(
-                                    color: Color(0xff59A5D8), fontSize: 20),
-                              ),
-                              SizedBox(height: 8),
-                            ],
-                          );
-                        } else {
-                          if (snapshot.data['data']['role'] == 'Donatur') {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                    child: Text(
-                                      'Apakah anda tertarik mengisi harapan, ${snapshot.data['data']['name']} ?',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                              child: Text(
-                                'Hai ${snapshot.data['data']['name']}, Silakan lihat pesan dari Para Donatur!',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 18),
-                                textAlign: TextAlign.center,
-                              ),
-                            );
-                          }
-                        }
-                      }
-                    }),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FutureBuilder(
-                      future: fetchHarapan(),
+            child: DraggableScrollableSheet(
+               initialChildSize: 1,
+            minChildSize: 1,
+            maxChildSize: 1,builder:
+                (BuildContext context, ScrollController scrollController) {
+              return SingleChildScrollView(
+                controller: scrollController,
+                child: Center(
+                    child: Column(children: [
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 4),
+                    child: HarapanCarousel(),
+                  ),
+                  FutureBuilder(
+                      future: request.get(
+                          "https://do-nasi.up.railway.app/auth/get_user_json/"),
                       builder: (context, AsyncSnapshot snapshot) {
                         if (snapshot.data == null) {
                           return const Center(
@@ -172,7 +125,7 @@ class _HarapanPageState extends State<HarapanPage> {
                             return Column(
                               children: const [
                                 Text(
-                                  "Tidak ada harapan :(",
+                                  "Silakan log in terlebih dahulu.",
                                   style: TextStyle(
                                       color: Color(0xff59A5D8), fontSize: 20),
                                 ),
@@ -180,86 +133,143 @@ class _HarapanPageState extends State<HarapanPage> {
                               ],
                             );
                           } else {
-                            return ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(2, 2, 2, 0),
-                                  child: Card(
-                                      child: Column(children: [
+                            if (snapshot.data['data']['role'] == 'Donatur') {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            snapshot.data![index].username,
-                                            style: const TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            '${snapshot.data![index].email}',
-                                            style: const TextStyle(
-                                              fontSize: 10,
-                                              color: Color.fromARGB(
-                                                  255, 94, 91, 91),
-                                            ),
-                                          ),
-                                        ],
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 0, 15, 0),
+                                      child: Text(
+                                        'Apakah anda tertarik mengisi harapan, ${snapshot.data['data']['name']} ?',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18),
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
-                                    Row(
-                                      children: [
-                                        const SizedBox(width: 10),
-                                        Flexible(
-                                          child: Text(
-                                            snapshot.data![index].text,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            DateFormat.yMMMMd().format(
-                                                DateTime.parse(snapshot
-                                                    .data![index].createdAt)),
-                                            style: const TextStyle(
-                                              fontSize: 10,
-                                              color: Color.fromARGB(
-                                                  255, 69, 68, 68),
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ])),
-                                );
-                              },
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                            );
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                child: Text(
+                                  'Hai ${snapshot.data['data']['name']}, Silakan lihat pesan dari Para Donatur!',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            }
                           }
                         }
                       }),
-                ),
-              ])),
-            ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FutureBuilder(
+                        future: fetchHarapan(),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.data == null) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else {
+                            if (!snapshot.hasData) {
+                              return Column(
+                                children: const [
+                                  Text(
+                                    "Tidak ada harapan :(",
+                                    style: TextStyle(
+                                        color: Color(0xff59A5D8), fontSize: 20),
+                                  ),
+                                  SizedBox(height: 8),
+                                ],
+                              );
+                            } else {
+                              return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(2, 2, 2, 0),
+                                    child: Card(
+                                        child: Column(children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              snapshot.data![index].username,
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              '${snapshot.data![index].email}',
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                color: Color.fromARGB(
+                                                    255, 94, 91, 91),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const SizedBox(width: 10),
+                                          Flexible(
+                                            child: Text(
+                                              snapshot.data![index].text,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              DateFormat.yMMMMd().format(
+                                                  DateTime.parse(snapshot
+                                                      .data![index].createdAt)),
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                color: Color.fromARGB(
+                                                    255, 69, 68, 68),
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ])),
+                                  );
+                                },
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                              );
+                            }
+                          }
+                        }),
+                  ),
+                ])),
+              );
+            }),
           ),
           FutureBuilder(
               future: request
@@ -293,7 +303,7 @@ class _HarapanPageState extends State<HarapanPage> {
                           child: Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(6.0),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.blue.shade900,
                                   radius: 25,
@@ -441,7 +451,6 @@ class _HarapanPageState extends State<HarapanPage> {
                                                 style: const TextStyle(
                                                     fontSize: 12),
                                                 decoration: InputDecoration(
-                                                  
                                                     hintText:
                                                         ("Harapan dari ${snapshot.data['data']['username']} ....."),
                                                     // Menambahkan circular border agar lebih rapi
