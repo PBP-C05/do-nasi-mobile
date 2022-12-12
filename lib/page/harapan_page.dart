@@ -294,7 +294,7 @@ class _HarapanPageState extends State<HarapanPage> {
                           child: Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(6.0),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.blue.shade900,
                                   radius: 25,

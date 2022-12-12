@@ -2,6 +2,7 @@ import 'package:do_nasi/page/harapan_page.dart';
 import 'package:do_nasi/page/page_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:countup/countup.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -24,15 +25,39 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                   height: 220,
                   width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       image: DecorationImage(
-                    image: AssetImage('assets/images/WorldHunger.jpg'),
+                    image: const AssetImage('assets/images/WorldHunger.jpg'),
                     fit: BoxFit.fill,
+                    colorFilter: ColorFilter.mode(
+                        const Color.fromARGB(255, 201, 200, 200)
+                            .withOpacity(0.6),
+                        BlendMode.dstATop),
                   ))),
               Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          const Text('Based on World Food Programme, there is'),
+                          Countup(
+                            begin: 0,
+                            end: 828,
+                            duration: const Duration(seconds: 3),
+                            separator: ',',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.red[600],
+                            ),
+                          ),
+                          const Text('Number of people that suffered from hunger'),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
@@ -73,7 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text('The Story Behind do-nasi',
-                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20))
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20))
                             ],
                           ),
                         ),
