@@ -82,6 +82,7 @@ flutter:
      - assets/images/donatur.png
      - assets/images/penyalur.png
      - assets/images/user.png
+     - assets/images/article_image.png
   fonts:
      - family: Poppins
        fonts:
