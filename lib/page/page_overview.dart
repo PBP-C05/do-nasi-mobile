@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:date_count_down/countdown.dart';
 import 'package:do_nasi/model/page_overview_model.dart';
+import 'package:do_nasi/page/home_page.dart';
+import 'package:do_nasi/page/main_page.dart';
 import 'package:do_nasi/utils/page_overview_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -43,17 +45,38 @@ class _PageOverviewState extends State<PageOverview> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.yellow[400],
-          centerTitle: true,
-          title: const Text('Page Overview'),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const MainPage()));
+              },
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/icon.ico', fit: BoxFit.cover),
+                Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+              ],
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width / 6)
+          ],
         ),
-        body: FutureBuilder(
+      ),
+        body:
+          FutureBuilder(
           future: request.get("https://do-nasi.up.railway.app/auth/get_user_json/"),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data != null) {
               final is_penyalur =
                   snapshot.data['data']['role'] == "Penyalur" ? true : false;
+              final name = snapshot.data['data']['name'];
               return FutureBuilder(
                   future: fetchPageOverview(request),
                   builder: (context, AsyncSnapshot snapshot) {
@@ -78,45 +101,58 @@ class _PageOverviewState extends State<PageOverview> {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (_, index) {
                               if (index == snapshot.data!.length - 1 && is_penyalur) {
+                                const Text("Page Overview"); 
                                 return Column(
                                   children: [
                                     Container(
                                         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                                         padding: const EdgeInsets.all(32.0),
-                                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15.0), boxShadow: const [BoxShadow(color: Colors.yellow, blurRadius: 2.0)]),
+                                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15.0), boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2.0)]),
                                         child: Column(children: [
                                           Row(
                                             children: [
                                               const Text(
-                                                "Title                  :",
+                                                "Title                   : ",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold),
                                               ),
                                               Flexible(
-                                                  child: Text(snapshot
-                                                      .data![index].fields.title))
+                                                  child: Text('${snapshot
+                                                      .data![index].fields.title} ',
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                  ))
                                             ],
                                           ),
                                           Row(
                                             children: [
                                               const Text(
-                                                "Description :",
+                                                "Description : ",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold),
                                               ),
                                               Flexible(
-                                                  child: Text(snapshot.data![index]
-                                                      .fields.description))
+                                                  child: Text('${snapshot.data![index]
+                                                      .fields.description} ',
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                      ))
                                             ],
                                           ),
                                           Row(children: [
                                             const Text(
-                                              "Deadline       :",
+                                              "Deadline        :",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Flexible(
-                                                child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
+                                                child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")} ',
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                       ))
                                           ]),
                                         ])),
                                     ElevatedButton(
@@ -147,42 +183,54 @@ class _PageOverviewState extends State<PageOverview> {
                                                 BorderRadius.circular(15.0),
                                             boxShadow: const [
                                               BoxShadow(
-                                                  color: Colors.yellow,
+                                                  color: Colors.grey,
                                                   blurRadius: 2.0)
                                             ]),
                                         child: Column(children: [
                                           Row(
                                             children: [
                                               const Text(
-                                                "Title                  :",
+                                                "Title                   : ",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold),
                                               ),
                                               Flexible(
-                                                  child: Text(snapshot
-                                                      .data![index].fields.title))
+                                                  child: Text('${snapshot
+                                                      .data![index].fields.title}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                      ))
                                             ],
                                           ),
                                           Row(
                                             children: [
                                               const Text(
-                                                "Description :",
+                                                "Description : ",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold),
                                               ),
                                               Flexible(
-                                                  child: Text(snapshot.data![index]
-                                                      .fields.description))
+                                                  child: Text('${snapshot.data![index]
+                                                      .fields.description}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                       ))
                                             ],
                                           ),
                                           Row(children: [
                                             const Text(
-                                              "Deadline       :",
+                                              "Deadline        :",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Flexible(
-                                                child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
+                                                child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                        textAlign: TextAlign.left,))
                                           ]),
                                         ])),
                                   ],
@@ -204,42 +252,54 @@ class _PageOverviewState extends State<PageOverview> {
                                             BorderRadius.circular(15.0),
                                         boxShadow: const [
                                           BoxShadow(
-                                              color: Colors.yellow,
+                                              color: Colors.grey,
                                               blurRadius: 2.0)
                                         ]),
                                     child: Column(children: [
                                       Row(
                                         children: [
                                           const Text(
-                                            "Title                  :",
+                                            "Title                   : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text(snapshot
-                                                  .data![index].fields.title))
+                                              child: Text('${snapshot
+                                                  .data![index].fields.title}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                        textAlign: TextAlign.left,))
                                         ],
                                       ),
                                       Row(
                                         children: [
                                           const Text(
-                                            "Description :",
+                                            "Description : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text(snapshot.data![index]
-                                                  .fields.description))
+                                              child: Text('${snapshot.data![index]
+                                                  .fields.description}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                        textAlign: TextAlign.left,))
                                         ],
                                       ),
                                       Row(children: [
-                                        Text(
-                                          "Deadline       :",
+                                         const Text(
+                                         "Deadline        :",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
-                                            child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired"," Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
+                                            child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired"," Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                        textAlign: TextAlign.left,))
                                       ]),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
@@ -289,42 +349,54 @@ class _PageOverviewState extends State<PageOverview> {
                                             BorderRadius.circular(15.0),
                                         boxShadow: const [
                                           BoxShadow(
-                                              color: Colors.yellow,
+                                              color: Colors.grey,
                                               blurRadius: 2.0)
                                         ]),
                                     child: Column(children: [
                                       Row(
                                         children: [
                                           const Text(
-                                            "Title                  :",
+                                            "Title                   : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text(snapshot
-                                                  .data![index].fields.title))
+                                              child: Text('${snapshot
+                                                  .data![index].fields.title}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                        textAlign: TextAlign.justify,))
                                         ],
                                       ),
                                       Row(
                                         children: [
                                           const Text(
-                                            "Description :",
+                                            "Description : ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Flexible(
-                                              child: Text(snapshot.data![index]
-                                                  .fields.description))
+                                              child: Text('${snapshot.data![index]
+                                                  .fields.description}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                        textAlign: TextAlign.justify,))
                                         ],
                                       ),
                                       Row(children: [
                                         const Text(
-                                          "Deadline       :",
+                                          "Deadline        :",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Flexible(
-                                            child: Text(CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")))
+                                            child: Text('${CountDown().timeLeft(DateTime.parse(snapshot.data![index].fields.deadline.toString()), " Expired", " Days ", " Hours ", " Minutes ", " Seconds ", " Days ", " Hours ", " Minutes ", " Seconds ")}' ,
+                                                       style: const TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 13),
+                                                        textAlign: TextAlign.justify,))
                                       ]),
                                     ]));
                               }
