@@ -1,7 +1,7 @@
 # PBP Proyek Akhir Semester
 
 ### Deployment
-[![Build status](https://build.appcenter.ms/v0.1/apps/e246dd95-b40c-473e-95fe-86392d935a42/branches/master/badge)](https://appcenter.ms)
+
 
 ### Nama-nama anggota kelompok 
 ```
