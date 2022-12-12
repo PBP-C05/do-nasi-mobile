@@ -87,14 +87,19 @@ class _MyHomePageState extends State<ArticlePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        child: Text("Tambahkan Artikelmu Disini",
+                      Center(
+                        child: SizedBox(
+                          child: Text(
+                            "Tambahkan Artikelmu Disini",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
-                            )),
-                        height: 30,
-                      ),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          height: 30,
+                        ),
+                      )
                     ],
                   )
                 ]),
@@ -152,7 +157,7 @@ class _MyHomePageState extends State<ArticlePage> {
                                                     .data![index].fields.slug)),
                                       ),
                                   child: SizedBox(
-                                      height: 110,
+                                      height: 150,
                                       child: Container(
                                         margin: const EdgeInsets.symmetric(
                                             horizontal: 0, vertical: 10),
@@ -177,21 +182,33 @@ class _MyHomePageState extends State<ArticlePage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(
-                                              child: Text(
-                                                "${snapshot.data![index].fields.title}",
-                                                maxLines: 2,
-                                                style: const TextStyle(
-                                                  fontSize: 22.0,
-                                                  fontWeight: FontWeight.bold,
+                                            ListTile(
+                                                title: Text(
+                                                  "${snapshot.data![index].fields.title}",
+                                                  style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
+                                                  maxLines: 2,
                                                 ),
-                                              ),
-                                            ),
+                                                subtitle: Text(
+                                                  "${snapshot.data![index].fields.body}"
+                                                      .replaceAll(
+                                                          RegExp(
+                                                              r'<[^>]*>|&[^;]+;'),
+                                                          ''),
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  softWrap: false,
+                                                ))
                                             // ignore: avoid_print
-
-                                            const SizedBox(height: 5),
                                           ],
                                         ),
                                       ))));
