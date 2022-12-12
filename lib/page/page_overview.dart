@@ -44,6 +44,7 @@ class _PageOverviewState extends State<PageOverview> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.yellow[400],
           centerTitle: true,
           title: const Text('Page Overview'),
