@@ -18,15 +18,6 @@ import 'package:provider/provider.dart';
 class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   @override
   State<ArticlePage> createState() => _MyHomePageState();
 }
@@ -75,6 +66,21 @@ class _MyHomePageState extends State<ArticlePage> {
         //       fit: BoxFit.cover),
         // ),
         child: Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromRGBO(251, 192, 45, 1),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyFormPage(),
+            ),
+          ).then((_) {
+            // refresh the page after returning
+            setState(() {});
+          });
+        },
+        child: const Icon(Icons.add),
+      ),
       backgroundColor: Colors.white,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -85,13 +91,12 @@ class _MyHomePageState extends State<ArticlePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                height: 150,
-                // decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //         opacity: 0.5,
-                //         image:
-                //             AssetImage("assets/images/article_image.png"),
-                //         fit: BoxFit.cover)),
+                height: 50,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        opacity: 0.5,
+                        image: AssetImage("assets/images/article_image.png"),
+                        fit: BoxFit.cover)),
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                 child: Row(children: [
                   Column(
@@ -106,40 +111,9 @@ class _MyHomePageState extends State<ArticlePage> {
                             )),
                         height: 30,
                       ),
-                      Container(
-                        margin:
-                            EdgeInsets.only(left: 115.0, right: 115.0, top: 40),
-                        child: SizedBox(
-                          width: 150,
-                          height: 40,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromRGBO(255, 205, 46, 1)),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.black),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MyFormPage()));
-                            },
-                            child: Text(
-                              'Tambahkan Artikel',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   )
                 ]),
-              ),
-              SizedBox(
-                height: 0,
               ),
               Expanded(
                   child: Container(

@@ -282,19 +282,6 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
                     const SizedBox(
                       height: 320,
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Row(children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Back'),
-                          ),
-                        )
-                      ]),
-                    )
                   ],
                 ))));
   }

@@ -2,6 +2,7 @@ import 'package:do_nasi/page/home_page.dart';
 import 'package:do_nasi/page/page_overview.dart';
 import 'package:do_nasi/page/profile.dart';
 import 'package:do_nasi/page/questions.dart';
+import 'package:do_nasi/page/article.dart';
 import 'package:do_nasi/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _MainPageState extends State<MainPage> {
   int navbarIndex = 0;
   final screens = [
     const MyHomePage(),
-    const PageOverview(),
+    const ArticlePage(),
     const QuestionsPage(),
     const ProfilePage(),
   ];
