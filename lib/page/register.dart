@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Form(
               key: _registerFormKey,
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                 child: Column(
                   children: [
                     Container(
