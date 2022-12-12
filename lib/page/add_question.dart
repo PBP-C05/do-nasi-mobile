@@ -165,8 +165,8 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
                       if (_postFormKey.currentState!.validate()) {
                         _postFormKey.currentState!.save();
                         const url =
-                            // 'https://do-nasi.up.railway.app/questions/add-post/';
-                            'http://127.0.0.1:8000/questions/add-post/';
+                            'https://do-nasi.up.railway.app/questions/add-post/';
+                            // 'http://127.0.0.1:8000/questions/add-post/';
                         final response = await request.post(url, {
                           'title': inputTitle,
                           'body' : inputBody,
