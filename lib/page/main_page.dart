@@ -1,3 +1,4 @@
+import 'package:do_nasi/page/harapan_page.dart';
 import 'package:do_nasi/page/home_page.dart';
 import 'package:do_nasi/page/page_overview.dart';
 import 'package:do_nasi/page/profile.dart';
@@ -16,15 +17,14 @@ class _MainPageState extends State<MainPage> {
   int navbarIndex = 0;
   final screens = [
     const MyHomePage(),
-    const PageOverview(),
     const QuestionsPage(),
+    const PageOverview(), // Tambah ARTICLE PAGE
     const ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
          backgroundColor: Colors.white,
          automaticallyImplyLeading: false,
@@ -37,6 +37,7 @@ class _MainPageState extends State<MainPage> {
          ),
        ),
       body: screens[navbarIndex],
+  
       bottomNavigationBar: BottomNavBar(
         onTap: (value) => setState(() {
           navbarIndex = value;
