@@ -2,6 +2,7 @@
 
 ### Deployment
 [![Build status](https://build.appcenter.ms/v0.1/apps/e246dd95-b40c-473e-95fe-86392d935a42/branches/master/badge)](https://appcenter.ms)
+App Center [download link here](http://y84x.mjt.lu/lnk/CAAAA5TDjj4AAAAAAAAAAAUDkr0AAAA6pnMAAAAAAAvpOQBjl1TdHlVgQ7uqQJykxO3y4HUwkAAL-7Q/1/lO-gmA4GHsH_XQ-_cLf7nA/aHR0cHM6Ly9pbnN0YWxsLmFwcGNlbnRlci5tcy9vcmdzL1BCUC1jbGltYS9hcHBzL2RvLW5hc2kvcmVsZWFzZXMvMjI_c291cmNlJiN4M0Q7ZW1haWwmdGlkJiN4M0Q7bHVfTnpub3hONA#x3D;email&tid=lu_NznoxN4)
 
 ### Nama-nama anggota kelompok 
 ```
